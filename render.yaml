@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: studybuddy-ai-server
+    runtime: node
+    rootDir: AI_SERVER
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    plan: free
+    envVars:
+      - key: NODE_VERSION
+        value: 24
+      - key: HOST
+        value: 0.0.0.0
+      - key: OPENAI_MODEL
+        value: gpt-5.6-terra
+      - key: STUDYBUDDY_DATA_DIR
+        value: ./data
+      - key: ALLOWED_ORIGINS
+        value: "*"
+      - key: OPENAI_API_KEY
+        sync: false

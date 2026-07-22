@@ -20,8 +20,18 @@ Use this pattern:
 - Version `1.0`, Build `1`: first TestFlight build.
 - Version `1.1`, Build `2`: practice exam simulator and PBQ update.
 - Version `1.2`, Build `3`: randomized 10-question tests, 90-question simulations, answer choices, and flashcard decks.
-- Version `1.2`, Build `4`: bug fix after tester feedback.
-- Version `1.3`, Build `5`: larger content or feature update.
+- Version `1.3`, Build `4`: welcoming splash screen plus harder randomized question banks for A+ Core 1, A+ Core 2, and Security+.
+- Version `1.4`, Build `5`: hard-only practice banks, tougher domain-specific distractors, harder PBQs for all three exams, and 5-second welcome screen.
+- Version `2.2`, Build `8`: AI tutor server, adaptive coaching endpoints, and startup health checks.
+- Version `2.3`, Build `9`: automatic AI server monitoring, background retry, and Xcode simulator auto-start helper.
+- Version `2.4`, Build `10`: OpenAI key validation, invalid-token status reporting, and safer local server startup.
+- Version `2.5`, Build `11`: live Render AI server wired into the app, production default server URL, and Xcode/TestFlight readiness update.
+- Version `2.6`, Build `12`: harder randomized practice, selected difficulty fixes, Quick Practice score screen, per-exam Results tab, adaptive study targets, and in-app PDFs.
+- Version `2.6`, Build `13`: automatic confidence inference, Quick Practice confidence signal bar, and Learn Labs removal until true in-app lab simulators are built.
+- Version `2.6`, Build `14`: active-exam-only Quick Practice filtering, first-time study defaults, grayed starter dashboard, achievement progress bars, and completion celebration animation.
+- Version `2.6`, Build `15`: complete all-progress reset with Today-tab navigation, app-open streak tracking, and four-choice protection for randomized practice questions.
+- Version `2.6`, Build `16`: reset confirmation now directly returns the app to the Today page after clearing all progress.
+- Version `2.7`, Build `17`: App Store Connect upload fix after the `2.6` pre-release train closed.
 
 Every upload to App Store Connect must use a build number that has not already been uploaded for that version.
 
@@ -50,10 +60,18 @@ Before each major iOS release:
    - Flashcards
    - Randomized flashcard deck order
    - Randomized 10-question quick practice
+   - Quick Practice final score screen
+   - Quick Practice questions stay inside the selected exam
+   - First-time dashboard defaults and baseline recommendation
+   - Achievement progress and completion celebration
    - Randomized 90-question exam simulation
+   - Selected Exam difficulty reflected in simulations
    - PBQ matching
    - Drag-to-order scenarios
    - Scaled-score results
+   - Results tab per-exam progress and attempt history
+   - In-app PDF cheat sheets
+   - Learn mode menu does not show Labs unless true in-app lab simulators are added
 4. Fix warnings or layout issues.
 5. Upload a compatibility update through TestFlight.
 

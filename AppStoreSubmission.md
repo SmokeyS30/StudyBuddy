@@ -24,11 +24,11 @@ study, exam, certification, flashcards, quiz, planner, A+, Security+, IT, cybers
 
 ## What's new
 
-Version 1.2 adds randomized 10-question practice tests, randomized 90-question simulations, shuffled answer choices, shuffled flashcard decks, PBQ-style items, and scaled-score estimates.
+Version 1.4 makes practice tougher across A+ Core 1, A+ Core 2, and Security+. Quick practice now pulls from hard-only original question banks, exam simulations use harder PBQ-style items, distractors are more plausible, and the welcome screen now remains visible for about 5 seconds.
 
 ## Privacy
 
-No data collected, assuming the app remains local-only and no analytics, ads, accounts, or network services are added.
+StudyBuddy does not require an account and does not collect contact info, location, payment info, advertising data, or tracking data. Because the app uses a hosted AI tutor server for adaptive coaching, App Store Connect should disclose limited study-related data collection: a random user ID, product interaction/usage data, and other user content for AI tutor chats and missed-question review. Uses: App Functionality and Product Personalization. Tracking: No.
 
 ## Review notes
 

@@ -1,0 +1,11 @@
+.DS_Store
+work/
+DerivedData/
+build/
+*.xcuserstate
+
+AI_SERVER/.env
+AI_SERVER/.env.*
+!AI_SERVER/.env.example
+AI_SERVER/node_modules/
+AI_SERVER/data/profiles.json

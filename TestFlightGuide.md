@@ -41,12 +41,20 @@ Important: the bundle identifier must be unique across all App Store apps.
 ## 4. Set version and build
 
 1. Still on the `StudyBuddy` target, open the General tab.
-2. Set Version to `1.0`.
-3. Set Build to `1`.
+2. For this update, set Version to `2.7`.
+3. For this update, set Build to `17`.
 4. Each time you upload another TestFlight build, increase Build:
    - First upload: `1`
    - Second upload: `2`
    - Third upload: `3`
+   - Hard-mode/splash update: `4`
+   - Hosted Render AI server update: `11`
+   - Adaptive results/practice update: `12`
+   - Quick confidence/Learn cleanup fix: `13`
+   - Achievements/starter dashboard/Quick exam filter: `14`
+   - Full reset/streak/question-choice fix: `15`
+   - Reset returns to Today page fix: `16`
+   - App Store closed train fix: `17`
 
 Apple will not accept two uploads with the same version and build number.
 
@@ -59,12 +67,19 @@ Apple will not accept two uploads with the same version and build number.
    - Plan
    - Learn
    - Practice
+   - Results
    - Settings
 4. In Settings, switch between A+ Core 1, A+ Core 2, and Security+.
 5. Try marking a study task complete in one exam.
 6. Switch to another exam and confirm progress is separate.
-7. Start an exam simulation and verify PBQ matching, drag-to-order items, timer, submission, and score review.
-8. Close and reopen the app to confirm progress stays saved.
+7. In Practice > Quick, switch exams in Settings and confirm the 10 questions match only the selected exam.
+8. Start an exam simulation and verify PBQ matching, drag-to-order items, timer, submission, and score review.
+9. Open Results and switch between A+ Core 1, A+ Core 2, and Security+ to confirm each exam has its own progress screen.
+10. Open Learn > Sheets and confirm each PDF opens inside the app.
+11. Open Learn and confirm there is no Labs option in the Learn mode menu.
+12. Open Settings and confirm the AI Tutor Server URL is `https://studybuddy-ai-server-m5zi.onrender.com`.
+13. Tap `Check AI Server Now` and confirm the status is `Online` and the OpenAI key says `Configured`.
+14. Close and reopen the app to confirm progress stays saved.
 
 ## 6. Run on your iPhone
 
@@ -157,11 +172,9 @@ Prepare these items in App Store Connect:
 7. Copyright holder.
 8. Review notes.
 
-Recommended privacy answer for the current local-only app:
+Recommended privacy answer for this AI-enabled build:
 
-`Data Not Collected`
-
-Only use that answer if you do not add analytics, ads, accounts, cloud sync, email collection, or network tracking.
+Disclose study performance data if the hosted AI tutor server remains enabled. StudyBuddy may send exam selection, selected answers, scores, inferred confidence signals, weak objectives, and study activity to your server for app functionality and personalization. Do not choose `Data Not Collected` while the AI tutor server is enabled by default.
 
 ## 13. Important education and trademark notes
 
@@ -218,9 +231,25 @@ Ask testers to check:
 13. PBQ matching items work.
 14. Drag-to-order scenarios work.
 15. Estimated scaled score and pass threshold display after submission.
-16. Settings can reset progress for the current exam.
-17. Text is readable on smaller iPhones.
-18. The disclaimer is visible in Learn and Settings.
+16. Quick Practice shows a final score screen at the end.
+17. Quick Practice estimates confidence automatically after each answer.
+18. Quick Practice results show a visual confidence signal bar instead of a percentage number.
+19. Quick Practice questions are relevant only to the currently selected exam.
+20. Changing Quick difficulty creates a fresh randomized question batch.
+21. Changing Exam difficulty is reflected inside the selected exam simulation.
+22. A first-time user sees starter study defaults and grayed/zeroed dashboard metrics before studying.
+23. Plan tells a first-time user to complete a baseline Quick Practice test before routing next steps.
+24. Achievements show hard targets with progress bars.
+25. Completing an achievement triggers a congratulations animation.
+26. Results shows a separate score/progress screen for each of the three exams.
+27. Results shows latest score, readiness, confidence, PBQ average, objective results, and attempt history.
+28. Plan shows an AI study target with daily minutes, suggested exam date, and domain time targets.
+29. Completed Plan topics show adaptive follow-up guidance.
+30. Learn > Sheets opens readable in-app PDFs.
+31. Learn no longer shows the old Labs section.
+32. Settings can reset progress for the current exam.
+33. Text is readable on smaller iPhones.
+34. The disclaimer is visible in Learn and Settings.
 
 ## 16. When you are ready for full App Store review
 
