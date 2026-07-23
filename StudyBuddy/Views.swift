@@ -3945,7 +3945,7 @@ struct SettingsView: View {
 
                 Section("Updates") {
                     LabeledContent("Version", value: "3.0")
-                    LabeledContent("Build", value: "18")
+                    LabeledContent("Build", value: "19")
                     LabeledContent("Update channel", value: "TestFlight/App Store")
                     LabeledContent("Automatic updates", value: "Managed by iOS")
                     LabeledContent("Compatibility", value: "SwiftUI, iOS 17+")

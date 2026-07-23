@@ -5,12 +5,13 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 ## Current Release
 
 - Version: `3.0`
-- Build: `18`
-- Release focus: a reusable, touch-friendly interactive lab engine with guided and challenge modes, six original exam-specific simulations, persistent lab progress, detailed scoring, randomized options, and TestFlight readiness.
+- Build: `19`
+- Release focus: six stateful, touch-friendly training environments with a typed command terminal, printer workbench, support workstations, firewall rule editor, packet tester, SOC dashboard, persistent grading, and TestFlight readiness.
 - Main project: `StudyBuddy.xcodeproj`
 - AI server: `AI_SERVER/`
 - App Store/TestFlight guide: `TestFlightGuide.md`
 - Release action guide: `ReleaseNotes_3.0.md`
+- App Review notes: `AppReviewNotes_3.0.md`
 - Render hosting guide: `RenderDeploymentGuide.md`
 
 ## What is included
@@ -21,8 +22,10 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 - Active exam picker for switching between A+ Core 1, A+ Core 2, and Security+.
 - Study plan organized by objective domain.
 - Learn tab with objectives, adaptive flashcard decks, interactive labs, cheat-sheet PDFs, video links, and exam strategy tips.
-- Six original interactive labs across A+ Core 1, A+ Core 2, and Security+, covering troubleshooting, printer service, Windows service configuration, malware response, firewall hardening, and incident investigation.
-- Reusable lab interactions including single-choice diagnosis, choose-two/choose-three decisions, ordered workflows, evidence review, guided coaching, challenge mode, randomized options, and a 75% completion standard.
+- Six original hands-on environments across A+ Core 1, A+ Core 2, and Security+, covering terminal troubleshooting, printer service, workstation service configuration, malware response, firewall hardening, and SOC investigation.
+- A virtual terminal that accepts typed `ipconfig`, `ping`, and `nslookup` commands and maintains isolated DNS and network state.
+- Stateful printer, service, malware, firewall, and SOC workspaces where controls alter the simulated system and grading evaluates the final state.
+- Guided mode with coaching and mobile command shortcuts, plus Challenge mode that hides those assists.
 - Per-exam lab progress and best scores that participate in the study dashboard and clear during Reset All Progress.
 - Practice tab with difficulty-aware randomized Quick Practice, Real Exam Mode, Speed Training, Exam Stress Mode, Nightmare Mode, and AI Targeted Recovery Exam.
 - Quick Practice is filtered to the selected exam so A+ Core 1, A+ Core 2, and Security+ questions do not mix, and every randomized question is guarded to show at least four answer choices.
@@ -100,7 +103,8 @@ Useful places to update:
 - `quickTips`: short coaching notes.
 - `exams`: the built-in list shown by the Settings exam picker.
 - `AI_SERVER/server.js`: AI tutor behavior, learning profile logic, and server-side OpenAI call.
-- `StudyBuddy/InteractiveLabs.swift`: reusable lab engine, interactions, grading, and original lab catalog.
+- `StudyBuddy/InteractiveLabs.swift`: lab catalog, session routing, persistent grading, and results.
+- `StudyBuddy/LabSimulationEnvironments.swift`: terminal, printer, support workstation, firewall, packet-test, and SOC environments.
 
 Avoid adding real exam questions or copied paid question-bank content. For App Review and exam-vendor rules, keep questions original and include the existing independent-study disclaimer.
 

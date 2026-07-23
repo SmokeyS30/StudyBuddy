@@ -14,6 +14,7 @@
 		A10000000000000000000019 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* Views.swift */; };
 		A1000000000000000000001B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001A /* Assets.xcassets */; };
 		A1000000000000000000001D /* InteractiveLabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001C /* InteractiveLabs.swift */; };
+		A1000000000000000000001F /* LabSimulationEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001E /* LabSimulationEnvironments.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		A10000000000000000000018 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		A1000000000000000000001A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1000000000000000000001C /* InteractiveLabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveLabs.swift; sourceTree = "<group>"; };
+		A1000000000000000000001E /* LabSimulationEnvironments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabSimulationEnvironments.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				A10000000000000000000016 /* ExamCatalog.swift */,
 				A10000000000000000000018 /* Views.swift */,
 				A1000000000000000000001C /* InteractiveLabs.swift */,
+				A1000000000000000000001E /* LabSimulationEnvironments.swift */,
 				A1000000000000000000001A /* Assets.xcassets */,
 			);
 			path = StudyBuddy;
@@ -143,6 +146,7 @@
 				A10000000000000000000017 /* ExamCatalog.swift in Sources */,
 				A10000000000000000000019 /* Views.swift in Sources */,
 				A1000000000000000000001D /* InteractiveLabs.swift in Sources */,
+				A1000000000000000000001F /* LabSimulationEnvironments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +280,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = StudyBuddy;
@@ -308,7 +312,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = StudyBuddy;
