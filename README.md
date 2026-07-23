@@ -4,13 +4,13 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 
 ## Current Release
 
-- Version: `2.7`
-- Build: `17`
-- Release focus: immediate Today-tab return after all-progress reset, app-open streak tracking, four-choice protection for randomized questions, active-exam-only Quick Practice, achievements, adaptive plan targets, in-app cheat-sheet PDFs, exam-specific Results screen, and TestFlight readiness.
+- Version: `3.0`
+- Build: `18`
+- Release focus: a reusable, touch-friendly interactive lab engine with guided and challenge modes, six original exam-specific simulations, persistent lab progress, detailed scoring, randomized options, and TestFlight readiness.
 - Main project: `StudyBuddy.xcodeproj`
 - AI server: `AI_SERVER/`
 - App Store/TestFlight guide: `TestFlightGuide.md`
-- Release action guide: `ReleaseNotes_2.7.md`
+- Release action guide: `ReleaseNotes_3.0.md`
 - Render hosting guide: `RenderDeploymentGuide.md`
 
 ## What is included
@@ -20,7 +20,10 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 - Achievement system with hard targets, progress bars, and an animated congratulations overlay when an achievement is completed.
 - Active exam picker for switching between A+ Core 1, A+ Core 2, and Security+.
 - Study plan organized by objective domain.
-- Learn tab with objectives, adaptive flashcard decks, cheat-sheet PDFs, video links, and exam strategy tips.
+- Learn tab with objectives, adaptive flashcard decks, interactive labs, cheat-sheet PDFs, video links, and exam strategy tips.
+- Six original interactive labs across A+ Core 1, A+ Core 2, and Security+, covering troubleshooting, printer service, Windows service configuration, malware response, firewall hardening, and incident investigation.
+- Reusable lab interactions including single-choice diagnosis, choose-two/choose-three decisions, ordered workflows, evidence review, guided coaching, challenge mode, randomized options, and a 75% completion standard.
+- Per-exam lab progress and best scores that participate in the study dashboard and clear during Reset All Progress.
 - Practice tab with difficulty-aware randomized Quick Practice, Real Exam Mode, Speed Training, Exam Stress Mode, Nightmare Mode, and AI Targeted Recovery Exam.
 - Quick Practice is filtered to the selected exam so A+ Core 1, A+ Core 2, and Security+ questions do not mix, and every randomized question is guarded to show at least four answer choices.
 - Results tab with per-exam score history, latest score, readiness, confidence, PBQ average, objective progress, trend review, and next-step coaching.
@@ -97,6 +100,7 @@ Useful places to update:
 - `quickTips`: short coaching notes.
 - `exams`: the built-in list shown by the Settings exam picker.
 - `AI_SERVER/server.js`: AI tutor behavior, learning profile logic, and server-side OpenAI call.
+- `StudyBuddy/InteractiveLabs.swift`: reusable lab engine, interactions, grading, and original lab catalog.
 
 Avoid adding real exam questions or copied paid question-bank content. For App Review and exam-vendor rules, keep questions original and include the existing independent-study disclaimer.
 

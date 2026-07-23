@@ -14,6 +14,7 @@ final class StudyBuddyStore: ObservableObject {
         static let appOpenDates = "studybuddy.appOpenDates"
         static let selectedDifficulty = "studybuddy.selectedDifficulty"
         static let examAttempts = "studybuddy.examAttempts"
+        static let labBestScores = "studybuddy.labBestScores"
         static let aiServerURL = "studybuddy.aiServerURL"
         static let aiStudentID = "studybuddy.aiStudentID"
         static let customExamName = "studybuddy.customExamName"
@@ -66,6 +67,10 @@ final class StudyBuddyStore: ObservableObject {
         didSet { saveAttempts() }
     }
 
+    @Published var labBestScores: [String: Int] {
+        didSet { saveLabScores() }
+    }
+
     @Published var aiServerURL: String {
         didSet { UserDefaults.standard.set(aiServerURL, forKey: Keys.aiServerURL) }
     }
@@ -108,6 +113,9 @@ final class StudyBuddyStore: ObservableObject {
         appOpenDates = Self.loadStringSet(key: Keys.appOpenDates)
         selectedDifficulty = StudyBuddyDifficultyLevel(rawValue: defaults.string(forKey: Keys.selectedDifficulty) ?? "") ?? .realExam
         examAttempts = Self.loadAttempts()
+        labBestScores = Self.loadLabScores(
+            key: Self.scopedKey(Keys.labBestScores, examID: resolvedExamID)
+        )
         let savedAIServerURL = defaults.string(forKey: Keys.aiServerURL)
         let shouldMigrateAIServerURL = Self.shouldReplaceSavedAIServerURL(savedAIServerURL)
         let resolvedAIServerURL = shouldMigrateAIServerURL
@@ -151,6 +159,7 @@ final class StudyBuddyStore: ObservableObject {
         !completedTaskIDs.isEmpty
             || !masteredCardIDs.isEmpty
             || !answeredQuestionIDs.isEmpty
+            || !labBestScores.isEmpty
             || !attemptsForSelectedExam.isEmpty
     }
 
@@ -557,6 +566,12 @@ final class StudyBuddyStore: ObservableObject {
         }
     }
 
+    func recordLabResult(labID: String, score: Int) {
+        let normalizedScore = min(max(score, 0), 100)
+        labBestScores[labID] = max(labBestScores[labID] ?? 0, normalizedScore)
+        markStudyActivity()
+    }
+
     func recordAppOpen(date: Date = .now) {
         appOpenDates.insert(Self.activityDateKey(for: date))
     }
@@ -592,7 +607,8 @@ final class StudyBuddyStore: ObservableObject {
                 Keys.completedTasks,
                 Keys.masteredCards,
                 Keys.answeredQuestions,
-                Keys.studyActivityDates
+                Keys.studyActivityDates,
+                Keys.labBestScores
             ].forEach { key in
                 defaults.removeObject(forKey: Self.scopedKey(key, examID: exam.id))
             }
@@ -602,6 +618,7 @@ final class StudyBuddyStore: ObservableObject {
         masteredCardIDs = []
         answeredQuestionIDs = []
         studyActivityDates = []
+        labBestScores = [:]
         appOpenDates = []
         examAttempts = []
         selectedDifficulty = .realExam
@@ -615,6 +632,9 @@ final class StudyBuddyStore: ObservableObject {
         masteredCardIDs = Self.loadStringSet(key: Self.scopedKey(Keys.masteredCards, examID: selectedExamID))
         answeredQuestionIDs = Self.loadStringSet(key: Self.scopedKey(Keys.answeredQuestions, examID: selectedExamID))
         studyActivityDates = Self.loadStringSet(key: Self.scopedKey(Keys.studyActivityDates, examID: selectedExamID))
+        labBestScores = Self.loadLabScores(
+            key: Self.scopedKey(Keys.labBestScores, examID: selectedExamID)
+        )
     }
 
     private func markStudyActivity(date: Date = .now) {
@@ -683,6 +703,22 @@ final class StudyBuddyStore: ObservableObject {
     private func saveAttempts() {
         guard let data = try? JSONEncoder().encode(examAttempts) else { return }
         UserDefaults.standard.set(data, forKey: Keys.examAttempts)
+    }
+
+    private static func loadLabScores(key: String) -> [String: Int] {
+        guard let data = UserDefaults.standard.data(forKey: key),
+              let scores = try? JSONDecoder().decode([String: Int].self, from: data) else {
+            return [:]
+        }
+        return scores
+    }
+
+    private func saveLabScores() {
+        guard let data = try? JSONEncoder().encode(labBestScores) else { return }
+        UserDefaults.standard.set(
+            data,
+            forKey: Self.scopedKey(Keys.labBestScores, examID: selectedExamID)
+        )
     }
 
     private static func loadOrCreateStudentID(defaults: UserDefaults) -> String {

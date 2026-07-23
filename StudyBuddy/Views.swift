@@ -1437,6 +1437,7 @@ struct LearnView: View {
     enum LearnMode: String, CaseIterable, Identifiable {
         case objectives = "Objectives"
         case flashcards = "Cards"
+        case labs = "Labs"
         case sheets = "Sheets"
         case videos = "Videos"
         case tips = "Tips"
@@ -1461,6 +1462,8 @@ struct LearnView: View {
                         ObjectiveList()
                     case .flashcards:
                         FlashcardDeck(index: $flashcardIndex)
+                    case .labs:
+                        HandsOnLabsList()
                     case .sheets:
                         CheatSheetsList()
                     case .videos:
@@ -1639,145 +1642,6 @@ struct TipsList: View {
                     .foregroundStyle(.secondary)
             }
         }
-    }
-}
-
-struct LabScenario: Identifiable, Hashable {
-    let id: String
-    let title: String
-    let domainID: String
-    let systemImage: String
-    let scenario: String
-    let objective: String
-    let steps: [String]
-    let successCriteria: [String]
-}
-
-struct HandsOnLabsList: View {
-    @EnvironmentObject private var store: StudyBuddyStore
-
-    var body: some View {
-        List {
-            Section {
-                ForEach(labs) { lab in
-                    NavigationLink {
-                        InteractiveLabView(lab: lab)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Label(lab.title, systemImage: lab.systemImage)
-                                .font(.headline)
-                            Text(lab.scenario)
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                                .lineLimit(3)
-                            if let domain = store.exam.domain(with: lab.domainID) {
-                                Label(domain.title, systemImage: "tag")
-                                    .font(.caption.weight(.semibold))
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                        .padding(.vertical, 6)
-                    }
-                }
-            } header: {
-                Text("Objective-Aligned Interactive Labs")
-            } footer: {
-                Text("These are original StudyBuddy labs mapped to exam objective areas. They are not official CompTIA labs or live exam PBQs.")
-            }
-
-            Section("Mobile Lab Tips") {
-                Text("Use each lab like a ticket: read the scenario, complete steps in order, check success criteria, then run a quick practice set for the same domain.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-            }
-        }
-    }
-
-    private var labs: [LabScenario] {
-        if store.exam.id == ExamCatalog.securityPlus.id {
-            return [
-                LabScenario(id: "701-lab-firewall", title: "Firewall Rule Triage", domainID: "701-architecture", systemImage: "firewall", scenario: "A branch firewall allows broad inbound management access. Reduce exposure without blocking required business traffic.", objective: "Apply security principles to secure enterprise infrastructure.", steps: ["Identify the overly broad source and destination", "Preserve required service access", "Restrict management traffic to approved admin networks", "Add logging for denied management attempts", "Document the risk reduction and rollback path"], successCriteria: ["Least privilege is applied", "Required traffic still works", "Logging supports later review"]),
-                LabScenario(id: "701-lab-incident", title: "Phishing Incident Ticket", domainID: "701-operations", systemImage: "tray.full", scenario: "A user reports a suspicious message with a URL and attachment. Triage it without spreading the threat.", objective: "Use data sources to support an investigation.", steps: ["Record sender, subject, URL, attachment hash, and recipient", "Search for additional recipients", "Preserve evidence before deleting artifacts", "Block malicious indicators through approved controls", "Notify the incident lead and document user guidance"], successCriteria: ["Evidence is preserved", "Scope is checked", "Containment is documented"]),
-                LabScenario(id: "701-lab-logs", title: "Authentication Log Review", domainID: "701-operations", systemImage: "doc.text.magnifyingglass", scenario: "Successful MFA appears after impossible travel alerts. Decide what evidence proves compromise or false positive.", objective: "Analyze indicators of malicious activity.", steps: ["Compare sign-in times, IPs, user agent, and location", "Check MFA method and prompt history", "Review risky mailbox or privileged actions", "Revoke sessions if compromise is likely", "Write a concise incident note"], successCriteria: ["Account risk is classified", "Response action matches evidence", "Notes include indicators"])
-            ]
-        }
-
-        if store.exam.id == ExamCatalog.aPlusCore1.id {
-            return [
-                LabScenario(id: "1201-lab-network", title: "DHCP and DNS Console", domainID: "1201-networking", systemImage: "network", scenario: "A workstation can ping an IP address but cannot browse by name after moving desks.", objective: "Diagnose wired and wireless symptoms with low-risk tools.", steps: ["Check link lights and adapter status", "Run IP configuration review", "Compare DNS server and gateway against a known-good device", "Flush or renew only after recording evidence", "Verify hostname and web access"], successCriteria: ["DNS vs DHCP is separated", "No destructive action is taken first", "Original workflow is verified"]),
-                LabScenario(id: "1201-lab-printer", title: "Printer Defect Sort", domainID: "1201-hardware", systemImage: "printer", scenario: "Three printers report loose toner, missing inkjet lines, and thermal labels printing blank.", objective: "Match printer technology to first maintenance step.", steps: ["Identify printer technology first", "Map loose toner to fuser or media checks", "Map missing inkjet lines to cleaning and alignment", "Map blank thermal labels to media type and orientation", "Document likely first action for each"], successCriteria: ["Printer type drives the fix", "Parts are not replaced blindly", "Each symptom has a first check"]),
-                LabScenario(id: "1201-lab-mobile", title: "Mobile Hardware Triage", domainID: "1201-mobile", systemImage: "iphone", scenario: "A phone overheats and charges only when the cable is held at an angle.", objective: "Recognize mobile charging, battery, and port symptoms safely.", steps: ["Stop unsafe charging behavior", "Inspect charger, cable, port debris, and physical damage", "Check battery health and swelling signs", "Test with known-good accessories", "Escalate repair if the port or battery is unsafe"], successCriteria: ["Safety is handled first", "Known-good testing is used", "Repair escalation is justified"])
-            ]
-        }
-
-        return [
-            LabScenario(id: "1202-lab-windows", title: "Windows Support Desktop", domainID: "1202-os", systemImage: "desktopcomputer", scenario: "A required service fails after each reboot and the user reports the problem began after an update.", objective: "Collect Windows evidence before repair.", steps: ["Open Services and check startup type", "Review Event Viewer or Reliability Monitor", "Check recent updates and startup changes", "Apply the least disruptive fix", "Restart and verify the service remains running"], successCriteria: ["Evidence source matches symptom", "Fix is reversible", "Verification survives reboot"]),
-            LabScenario(id: "1202-lab-linux", title: "Linux Permission Terminal", domainID: "1202-os", systemImage: "terminal", scenario: "A script cannot run after being copied to a Linux workstation.", objective: "Use command-line tools to inspect file permissions.", steps: ["Use ls -l to inspect permissions", "Identify owner and group", "Use chmod only if execute permission is missing", "Use chown only if ownership is wrong", "Run the script and document the command used"], successCriteria: ["Permissions are inspected first", "chmod and chown are not confused", "The fix is verified"]),
-            LabScenario(id: "1202-lab-malware", title: "Malware Response Flow", domainID: "1202-security", systemImage: "shield.lefthalf.filled", scenario: "A workstation shows browser redirects and unexpected startup entries.", objective: "Follow malware removal order without skipping containment.", steps: ["Identify symptoms and recent changes", "Quarantine or isolate according to policy", "Preserve useful logs and user data", "Remediate with updated tools", "Verify browser, startup, and network behavior", "Educate the user"], successCriteria: ["Order is defensible", "Evidence is not destroyed early", "Recovery is verified"])
-        ]
-    }
-}
-
-struct InteractiveLabView: View {
-    let lab: LabScenario
-    @State private var completedSteps: Set<Int> = []
-
-    private var progress: Double {
-        Double(completedSteps.count) / Double(max(lab.steps.count, 1))
-    }
-
-    var body: some View {
-        List {
-            Section("Scenario") {
-                Text(lab.scenario)
-                    .font(.callout)
-                Label(lab.objective, systemImage: "checkmark.seal")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.secondary)
-            }
-
-            Section("Lab Steps") {
-                ForEach(Array(lab.steps.enumerated()), id: \.offset) { index, step in
-                    Button {
-                        if completedSteps.contains(index) {
-                            completedSteps.remove(index)
-                        } else {
-                            completedSteps.insert(index)
-                        }
-                    } label: {
-                        HStack(alignment: .top, spacing: 12) {
-                            Image(systemName: completedSteps.contains(index) ? "checkmark.circle.fill" : "circle")
-                                .foregroundStyle(completedSteps.contains(index) ? .green : .secondary)
-                            Text(step)
-                                .foregroundStyle(.primary)
-                            Spacer(minLength: 0)
-                        }
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-
-            Section("Success Criteria") {
-                ForEach(lab.successCriteria, id: \.self) { criterion in
-                    Label(criterion, systemImage: "target")
-                }
-            }
-
-            Section("Progress") {
-                ProgressView(value: progress)
-                Text("\(completedSteps.count) of \(lab.steps.count) steps complete")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                Button {
-                    completedSteps = []
-                } label: {
-                    Label("Reset Lab", systemImage: "arrow.clockwise")
-                }
-            }
-        }
-        .navigationTitle(lab.title)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -4080,8 +3944,8 @@ struct SettingsView: View {
                 }
 
                 Section("Updates") {
-                    LabeledContent("Version", value: "2.7")
-                    LabeledContent("Build", value: "17")
+                    LabeledContent("Version", value: "3.0")
+                    LabeledContent("Build", value: "18")
                     LabeledContent("Update channel", value: "TestFlight/App Store")
                     LabeledContent("Automatic updates", value: "Managed by iOS")
                     LabeledContent("Compatibility", value: "SwiftUI, iOS 17+")
