@@ -4,9 +4,9 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 
 ## Current Release
 
-- Version: `3.0`
-- Build: `20`
-- Release focus: Apple App Attest protection for AI and adaptive-learning requests, a staged rollout that remains compatible with build 19, and Render Starter hosting with persistent learner and attestation state.
+- Version: `3.1`
+- Build: `21`
+- Release focus: enforced Apple App Attest protection for AI and adaptive-learning requests, plus Render Starter hosting with persistent learner and attestation state.
 - Main project: `StudyBuddy.xcodeproj`
 - AI server: `AI_SERVER/`
 - App Store/TestFlight guide: `TestFlightGuide.md`
@@ -92,7 +92,7 @@ Your local `AI_SERVER/.env` file is intentionally excluded from `StudyBuddy.zip`
 
 For Render hosting, read `RenderDeploymentGuide.md`. The project includes a root `render.yaml` for deploying the full StudyBuddy repo and an `AI_SERVER/render.yaml` for deploying a server-only repo.
 
-Build 20 adds Apple App Attest to the AI request flow. The server initially uses `APP_ATTEST_MODE=monitor`, which validates build-20 assertions without blocking build 19. After build 20 has been verified on a physical TestFlight device and adoption is high enough, follow `AppAttestDeploymentGuide.md` to change the server to `enforce`.
+Version 3.1 build 21 adds Apple App Attest to the AI request flow. The production Render server now uses `APP_ATTEST_MODE=enforce`, so protected AI requests require a valid assertion from the signed app. See `AppAttestDeploymentGuide.md` for validation and rollback steps.
 
 ## Fine-tune exam content
 

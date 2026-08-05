@@ -4,8 +4,8 @@ This is the server-side AI tutor and adaptive learning engine for StudyBuddy. Ke
 
 ## Current Status
 
-- App version: `3.0`
-- App build: `20`
+- App version: `3.1`
+- App build: `21`
 - Server package version: `1.2.0`
 - Server model: `gpt-5.6-terra`
 - Hosted Render URL: `https://studybuddy-ai-server-m5zi.onrender.com`
@@ -129,9 +129,9 @@ Required environment variables:
 OPENAI_API_KEY=sk-your-key-here
 OPENAI_MODEL=gpt-5.6-terra
 HOST=0.0.0.0
-STUDYBUDDY_DATA_DIR=./data
+STUDYBUDDY_DATA_DIR=/var/data/studybuddy
 ALLOWED_ORIGINS=*
-APP_ATTEST_MODE=monitor
+APP_ATTEST_MODE=enforce
 APP_ATTEST_TEAM_ID=S6L62N62M4
 APP_ATTEST_BUNDLE_ID=com.smokeys30.studybuddy
 APP_ATTEST_ALLOW_DEVELOPMENT=false
@@ -141,7 +141,7 @@ Do not set `PORT` manually on Render unless Render tells you to. Render provides
 
 For production, use persistent storage for `STUDYBUDDY_DATA_DIR` so student learning profiles and registered App Attest public keys are not erased when the server restarts. The included Render Blueprint uses `/var/data/studybuddy` on a 1 GB persistent disk.
 
-Keep `APP_ATTEST_MODE=monitor` while build 19 is still active. After the updated server and build 20 have been tested together on a physical TestFlight device, change the value to `enforce`. See `../AppAttestDeploymentGuide.md` for validation and rollback steps.
+Production now uses `APP_ATTEST_MODE=enforce` with StudyBuddy 3.1 build 21. Protected AI routes reject missing or invalid assertions with `401`. See `../AppAttestDeploymentGuide.md` for validation and rollback steps.
 
 ## Cost Estimate
 

@@ -23,7 +23,7 @@ services:
       - key: ALLOWED_ORIGINS
         value: "*"
       - key: APP_ATTEST_MODE
-        value: monitor
+        value: enforce
       - key: APP_ATTEST_TEAM_ID
         value: S6L62N62M4
       - key: APP_ATTEST_BUNDLE_ID

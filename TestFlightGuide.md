@@ -41,8 +41,8 @@ Important: the bundle identifier must be unique across all App Store apps.
 ## 4. Set version and build
 
 1. Still on the `StudyBuddy` target, open the General tab.
-2. For this update, set Version to `3.0`.
-3. For this update, set Build to `20`.
+2. For this update, set Version to `3.1`.
+3. For this update, set Build to `21`.
 4. Each time you upload another TestFlight build, increase Build:
    - First upload: `1`
    - Second upload: `2`
@@ -57,6 +57,7 @@ Important: the bundle identifier must be unique across all App Store apps.
    - App Store closed train fix: `17`
    - Hands-on lab environments: `19`
    - Apple App Attest and persistent Render state: `20`
+   - App Store 3.1 release and enforced App Attest: `21`
 
 Apple will not accept two uploads with the same version and build number.
 
@@ -181,7 +182,7 @@ Recommended privacy answer for this AI-enabled build:
 
 Disclose study performance data if the hosted AI tutor server remains enabled. StudyBuddy may send exam selection, selected answers, scores, inferred confidence signals, weak objectives, and study activity to your server for app functionality and personalization. Do not choose `Data Not Collected` while the AI tutor server is enabled by default.
 
-For build 20, conservatively disclose `Identifiers > Device ID` for `App Functionality`, linked to the device, and not used for tracking. StudyBuddy stores an app-scoped App Attest key identifier and related integrity state on its server to prevent fraud and replay. Also confirm the existing usage/study-data disclosures still match the live server. App Store Connect answers must describe the behavior of the build being submitted.
+For build 21, conservatively disclose `Identifiers > Device ID` for `App Functionality`, linked to the device, and not used for tracking. StudyBuddy stores an app-scoped App Attest key identifier and related integrity state on its server to prevent fraud and replay. Also confirm the existing usage/study-data disclosures still match the live server. App Store Connect answers must describe the behavior of the build being submitted.
 
 ## 13. Important education and trademark notes
 
@@ -217,7 +218,7 @@ Open `Assets.xcassets`, select `AppIcon`, and confirm the 1024x1024 icon is pres
 
 ### App Store asks for privacy details
 
-Complete App Privacy in App Store Connect. Do not choose `Data Not Collected` for build 20 while the hosted AI tutor and App Attest flows are enabled.
+Complete App Privacy in App Store Connect. Do not choose `Data Not Collected` for build 21 while the hosted AI tutor and App Attest flows are enabled.
 
 ## 15. Suggested TestFlight test checklist
 
