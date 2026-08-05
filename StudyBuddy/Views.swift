@@ -154,7 +154,7 @@ struct WelcomeSplashView: View {
                             .font(.title3.weight(.medium))
                             .foregroundStyle(.white.opacity(0.78))
 
-                        Text("StudyBuddy")
+                        Text("PrepNexus: IT Certs")
                             .font(.system(size: 48, weight: .black, design: .rounded))
                             .foregroundStyle(.white)
                             .lineLimit(1)
@@ -189,7 +189,7 @@ struct WelcomeSplashView: View {
             .padding()
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Welcome to StudyBuddy. \(store.displayExamName). Let's get you exam-ready today.")
+        .accessibilityLabel("Welcome to PrepNexus: IT Certs. \(store.displayExamName). Let's get you exam-ready today.")
     }
 }
 
@@ -235,7 +235,7 @@ struct DashboardView: View {
                 .padding()
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("StudyBuddy")
+            .navigationTitle("PrepNexus: IT Certs")
         }
     }
 
@@ -319,7 +319,7 @@ struct DashboardView: View {
                     .font(.title3.weight(.bold))
                     .foregroundStyle(.blue)
 
-                Text("StudyBuddy set a starter plan: test in \(store.daysUntilExam) days and study \(Int(store.minutesPerDay)) minutes per day.")
+                Text("PrepNexus set a starter plan: test in \(store.daysUntilExam) days and study \(Int(store.minutesPerDay)) minutes per day.")
                     .font(.headline)
 
                 Text("Take one 10-question Quick Practice test first. After that, the dashboard, plan, readiness, weak objectives, and achievements start opening up with real data.")
@@ -353,11 +353,11 @@ struct DashboardView: View {
             SectionHeader(title: "Adaptive Coach", systemImage: "brain.head.profile")
 
             VStack(alignment: .leading, spacing: 10) {
-                Text(store.isFirstStudyRun ? "StudyBuddy is waiting for your first Quick Practice baseline." : weak.map { "StudyBuddy noticed \(store.objectiveReadiness(for: $0).rawValue.lowercased()) performance in \($0.title)." } ?? "StudyBuddy will personalize your next assignments after your first practice exam.")
+                Text(store.isFirstStudyRun ? "PrepNexus is waiting for your first Quick Practice baseline." : weak.map { "PrepNexus noticed \(store.objectiveReadiness(for: $0).rawValue.lowercased()) performance in \($0.title)." } ?? "PrepNexus will personalize your next assignments after your first practice exam.")
                     .font(.headline)
 
                 if store.isFirstStudyRun {
-                    AdaptiveAssignmentRow(title: "Baseline first", detail: "Start with Practice > Quick so StudyBuddy can learn where to route you next.", systemImage: "play.circle")
+                    AdaptiveAssignmentRow(title: "Baseline first", detail: "Start with Practice > Quick so PrepNexus can learn where to route you next.", systemImage: "play.circle")
                     AdaptiveAssignmentRow(title: "Default plan", detail: "\(Int(store.minutesPerDay)) minutes per day until \(store.examDate.formatted(date: .abbreviated, time: .omitted)).", systemImage: "calendar.badge.clock")
                 } else if let weak {
                     AdaptiveAssignmentRow(title: "30 targeted questions", detail: weak.title, systemImage: "target")
@@ -556,7 +556,7 @@ struct ResultsView: View {
             if attempts.isEmpty {
                 EmptyResultsCard(
                     title: "No trend yet",
-                    detail: "Finish a Quick Practice set or Real Exam Mode attempt and StudyBuddy will start charting your score movement here."
+                    detail: "Finish a Quick Practice set or Real Exam Mode attempt and PrepNexus will start charting your score movement here."
                 )
             } else {
                 VStack(alignment: .leading, spacing: 12) {
@@ -639,7 +639,7 @@ struct ResultsView: View {
         }
 
         if latestAttempt.didPass {
-            return "Good latest score. StudyBuddy still checks confidence and weak objectives before calling it exam-ready."
+            return "Good latest score. PrepNexus still checks confidence and weak objectives before calling it exam-ready."
         }
 
         return "This exam needs more targeted work. Use the weakest objectives below for your next study block and recovery exam."
@@ -659,9 +659,9 @@ struct ResultsView: View {
 
     private var confidenceCoachingCopy: String {
         let average = store.confidenceAverage(for: selectedExam.id)
-        if average == 0 { return "Complete a few attempts so StudyBuddy can infer known answers, narrowed choices, and guesses." }
+        if average == 0 { return "Complete a few attempts so PrepNexus can infer known answers, narrowed choices, and guesses." }
         if average < 0.68 { return "Too many answers are guess-heavy. Slow down and review the explanations after each attempt." }
-        return "Confidence is improving. StudyBuddy will keep using timing, changes, flags, and results to keep readiness realistic."
+        return "Confidence is improving. PrepNexus will keep using timing, changes, flags, and results to keep readiness realistic."
     }
 
     private var pbqAverageText: String {
@@ -674,7 +674,7 @@ struct ResultsView: View {
         guard attempts.count >= 2,
               let latest = attempts.first,
               let previous = attempts.dropFirst().first else {
-            return "StudyBuddy will compare your latest attempt against the previous one after you finish at least two attempts."
+            return "PrepNexus will compare your latest attempt against the previous one after you finish at least two attempts."
         }
 
         let delta = latest.percent - previous.percent
@@ -689,7 +689,7 @@ struct ResultsView: View {
 
     private func nextStepCopy(weakDomains: [ExamDomain]) -> String {
         guard !attempts.isEmpty else {
-            return "Start with one baseline test. After that, StudyBuddy can recommend the right recovery path for this exam."
+            return "Start with one baseline test. After that, PrepNexus can recommend the right recovery path for this exam."
         }
 
         if let first = weakDomains.first {
@@ -1326,7 +1326,7 @@ struct PlanView: View {
                         .font(.headline)
                     Label("Starter exam date: \(store.examDate.formatted(date: .abbreviated, time: .omitted))", systemImage: "calendar")
                         .font(.subheadline.weight(.semibold))
-                    Text("Before StudyBuddy tells you what to study next, complete one 10-question Quick Practice test. That baseline unlocks objective routing, readiness estimates, weak areas, and achievement progress.")
+                    Text("Before PrepNexus tells you what to study next, complete one 10-question Quick Practice test. That baseline unlocks objective routing, readiness estimates, weak areas, and achievement progress.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
@@ -1338,7 +1338,7 @@ struct PlanView: View {
     private var aiStudyTarget: some View {
         let recommendation = store.studyPlanRecommendation
         return Section(
-            header: Text("StudyBuddy AI Target"),
+            header: Text("PrepNexus AI Target"),
             footer: Text("This recommendation updates as you complete tasks, answer questions, generate confidence signals, and finish exams.")
         ) {
             VStack(alignment: .leading, spacing: 12) {
@@ -1684,7 +1684,7 @@ struct CheatSheetsList: View {
             } header: {
                 Text("In-App PDF Review Sheets")
             } footer: {
-                Text("Each sheet opens as a generated PDF inside StudyBuddy and is mapped to the selected exam.")
+                Text("Each sheet opens as a generated PDF inside PrepNexus and is mapped to the selected exam.")
             }
 
             Section("Current Exam") {
@@ -1785,7 +1785,7 @@ enum CheatSheetPDFRenderer {
         return renderer.pdfData { context in
             context.beginPage()
             var y: CGFloat = 36
-            draw("StudyBuddy", at: &y, pageRect: pageRect, font: .boldSystemFont(ofSize: 14), color: .secondaryLabel)
+            draw("PrepNexus", at: &y, pageRect: pageRect, font: .boldSystemFont(ofSize: 14), color: .secondaryLabel)
             draw(sheet.title, at: &y, pageRect: pageRect, font: .boldSystemFont(ofSize: 26), color: .label)
             draw(examLabel, at: &y, pageRect: pageRect, font: .systemFont(ofSize: 14), color: .secondaryLabel)
             y += 10
@@ -1798,7 +1798,7 @@ enum CheatSheetPDFRenderer {
                 y += 8
             }
 
-            draw("Original StudyBuddy review material. Verify final exam objectives with the current vendor objective document before testing.", at: &y, pageRect: pageRect, font: .italicSystemFont(ofSize: 11), color: .secondaryLabel)
+            draw("Original PrepNexus review material. Verify final exam objectives with the current vendor objective document before testing.", at: &y, pageRect: pageRect, font: .italicSystemFont(ofSize: 11), color: .secondaryLabel)
         }
     }
 
@@ -1846,7 +1846,7 @@ struct VideoResourcesList: View {
             } header: {
                 Text("Review After Misses")
             } footer: {
-                Text("StudyBuddy routes missed questions to the weakest objective first. Use these sources for legal, high-quality review instead of copied exam-bank content.")
+                Text("PrepNexus routes missed questions to the weakest objective first. Use these sources for legal, high-quality review instead of copied exam-bank content.")
             }
         }
     }
@@ -1985,7 +1985,7 @@ struct QuickPracticeView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("StudyBuddy confidence estimate", systemImage: "waveform.path.ecg")
+                    Label("PrepNexus confidence estimate", systemImage: "waveform.path.ecg")
                         .font(.caption.weight(.bold))
                         .foregroundStyle(.secondary)
                         .textCase(.uppercase)
@@ -1994,7 +1994,7 @@ struct QuickPracticeView: View {
                         confidence: answered ? selectedConfidence : nil,
                         detail: answered
                             ? "Estimated from answer time, correctness, and selected difficulty."
-                            : "StudyBuddy will estimate this after you answer."
+                            : "PrepNexus will estimate this after you answer."
                     )
                 }
                 .padding()
@@ -2241,7 +2241,7 @@ struct ConfidenceEstimateCard: View {
                 .foregroundStyle(.secondary)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("StudyBuddy confidence estimate. Current estimate: \(confidence?.title ?? "Not estimated yet")")
+        .accessibilityLabel("PrepNexus confidence estimate. Current estimate: \(confidence?.title ?? "Not estimated yet")")
     }
 
     private func levelTint(_ level: ConfidenceLevel) -> Color {
@@ -2440,7 +2440,7 @@ struct QuickPracticeResultView: View {
                 .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
 
                 VStack(alignment: .leading, spacing: 10) {
-                    SectionHeader(title: "StudyBuddy Next Step", systemImage: "brain.head.profile")
+                    SectionHeader(title: "PrepNexus Next Step", systemImage: "brain.head.profile")
                     Text(nextStep)
                         .font(.callout)
                         .foregroundStyle(.secondary)
@@ -2498,7 +2498,7 @@ struct QuickPracticeResultView: View {
         if percent >= difficulty.readinessTarget && confidenceAverage >= 0.8 {
             return "This was a good signal. Move up one difficulty or run a full exam simulation."
         }
-        return "Restart for a fresh batch. StudyBuddy will keep separating lucky answers from real mastery automatically."
+        return "Restart for a fresh batch. PrepNexus will keep separating lucky answers from real mastery automatically."
     }
 }
 
@@ -2554,7 +2554,7 @@ struct ExamSimulationListView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Label("Scoring note", systemImage: "info.circle")
                         .font(.headline)
-                    Text("CompTIA's exact scoring algorithm is proprietary. StudyBuddy uses a CompTIA-style 100-900 scaled-score estimate with public pass thresholds and weighted practice items.")
+                    Text("CompTIA's exact scoring algorithm is proprietary. PrepNexus uses a CompTIA-style 100-900 scaled-score estimate with public pass thresholds and weighted practice items.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
@@ -2739,7 +2739,7 @@ struct ExamSimulatorView: View {
             }
             Button("Keep Working", role: .cancel) {}
         } message: {
-            Text("StudyBuddy will score only the answers saved so far.")
+            Text("PrepNexus will score only the answers saved so far.")
         }
     }
 
@@ -2909,7 +2909,7 @@ struct ExamSimulatorView: View {
 
     private func confidenceMeter(for item: ExamItem) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label("StudyBuddy confidence estimate", systemImage: "waveform.path.ecg")
+            Label("PrepNexus confidence estimate", systemImage: "waveform.path.ecg")
                 .font(.caption.weight(.bold))
                 .foregroundStyle(.secondary)
                 .textCase(.uppercase)
@@ -2918,7 +2918,7 @@ struct ExamSimulatorView: View {
                 confidence: isAnswered(item) ? inferredConfidence(for: item, answer: draftAnswer) : nil,
                 detail: isAnswered(item)
                     ? "Estimated from time spent, answer changes, flags, correctness, and difficulty."
-                    : "StudyBuddy will estimate this after you work the item."
+                    : "PrepNexus will estimate this after you work the item."
             )
         }
         .padding()
@@ -3343,7 +3343,7 @@ struct ExamResultView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Label("Scoring note", systemImage: "info.circle")
                         .font(.headline)
-                    Text("CompTIA's exact scoring algorithm and real item weights are proprietary. This result is a StudyBuddy estimate using original practice items, partial credit for PBQ-style items, and the public-style scaled-score range.")
+                    Text("CompTIA's exact scoring algorithm and real item weights are proprietary. This result is a PrepNexus estimate using original practice items, partial credit for PBQ-style items, and the public-style scaled-score range.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
@@ -3390,14 +3390,14 @@ struct ExamResultView: View {
         if result.didPass {
             return "You are above this simulator's pass line. Keep drilling weak objectives and PBQs until your score is repeatable."
         }
-        return "You are not at a repeatable pass signal yet. StudyBuddy will route your next practice toward the lowest objective areas."
+        return "You are not at a repeatable pass signal yet. PrepNexus will route your next practice toward the lowest objective areas."
     }
 
     private var adaptiveNextStep: String {
         if let weak = store.weakDomains(limit: 1).first {
-            return "StudyBuddy sees the next best recovery area as \(weak.title). Spend \(max(20, Int(store.minutesPerDay / 2))) minutes there, then run the targeted recovery exam before another full-length attempt."
+            return "PrepNexus sees the next best recovery area as \(weak.title). Spend \(max(20, Int(store.minutesPerDay / 2))) minutes there, then run the targeted recovery exam before another full-length attempt."
         }
-        return "Complete one targeted recovery exam so StudyBuddy can compare confidence, score, and objective performance before your next full-length attempt."
+        return "Complete one targeted recovery exam so PrepNexus can compare confidence, score, and objective performance before your next full-length attempt."
     }
 
     private func domainPercent(for domainID: String) -> Double {
@@ -3474,7 +3474,7 @@ struct ExamReviewCard: View {
             VStack(alignment: .leading, spacing: 6) {
                 Label(domain?.title ?? "Mapped objective", systemImage: "tag")
                 Label("Difficulty: \(difficulty.title)", systemImage: "speedometer")
-                Label("StudyBuddy confidence: \(confidence?.title ?? "Not estimated")", systemImage: "waveform.path.ecg")
+                Label("PrepNexus confidence: \(confidence?.title ?? "Not estimated")", systemImage: "waveform.path.ecg")
                 Label("Common mistake: \(commonMistake)", systemImage: "exclamationmark.triangle")
                 Label("Average user score: local analytics will improve as more attempts are recorded.", systemImage: "person.2")
             }
@@ -3758,7 +3758,7 @@ struct AITutorSheet: View {
     private func loadTutor() async {
         guard tutorResponse == nil, !isLoading else { return }
         guard let baseURL = store.resolvedAIServerURL else {
-            errorMessage = "Add your StudyBuddy AI server URL in Settings."
+            errorMessage = "Add your PrepNexus AI server URL in Settings."
             return
         }
 
@@ -3986,12 +3986,12 @@ struct SettingsView: View {
 
                 Section("Legal & Support") {
                     Link(destination: URL(string: "https://smokeys30.github.io/StudyBuddy/Support.html")!) {
-                        Label("StudyBuddy Support", systemImage: "questionmark.circle")
+                        Label("PrepNexus Support", systemImage: "questionmark.circle")
                     }
                     Link(destination: URL(string: "https://smokeys30.github.io/StudyBuddy/PrivacyPolicy.html")!) {
                         Label("Privacy Policy", systemImage: "hand.raised")
                     }
-                    Link(destination: URL(string: "mailto:edwardbloomfield@mac.com?subject=StudyBuddy%20Support")!) {
+                    Link(destination: URL(string: "mailto:edwardbloomfield@mac.com?subject=PrepNexus%20Support")!) {
                         Label("Email Support", systemImage: "envelope")
                     }
                 }
@@ -4000,7 +4000,7 @@ struct SettingsView: View {
                     Button(role: .destructive) {
                         showResetConfirmation = true
                     } label: {
-                        Label("Reset all StudyBuddy progress", systemImage: "trash")
+                        Label("Reset all PrepNexus progress", systemImage: "trash")
                     }
                 }
 

@@ -170,7 +170,7 @@ private struct VirtualTerminalView: View {
 
                 Spacer()
 
-                Text("StudyBuddy Terminal")
+                Text("PrepNexus Terminal")
                     .font(.caption.monospaced().weight(.bold))
                     .foregroundStyle(Color.white.opacity(0.72))
 
@@ -281,7 +281,7 @@ struct NetworkTerminalSimulation: View {
     let onComplete: (SimulationEnvironmentReport) -> Void
 
     @State private var lines: [TerminalLine] = [
-        TerminalLine(text: "StudyBuddy Network Shell 1.0", kind: .system),
+        TerminalLine(text: "PrepNexus Network Shell 1.0", kind: .system),
         TerminalLine(text: "Ticket SB-1201-204 loaded. Type help for supported commands.", kind: .output)
     ]
     @State private var activityLog: [String] = []
@@ -2123,7 +2123,7 @@ struct SOCConsoleSimulation: View {
 
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Label("StudyBuddy SOC", systemImage: "waveform.path.ecg.rectangle")
+                        Label("PrepNexus SOC", systemImage: "waveform.path.ecg.rectangle")
                             .font(.headline)
                         Spacer()
                         Text("1 high alert")

@@ -1,7 +1,7 @@
 import Foundation
 
 enum ExamCatalog {
-    private static let comptiaDisclaimer = "StudyBuddy is independent study software. It is not affiliated with, endorsed by, or sponsored by CompTIA. CompTIA, A+, and Security+ are trademarks of CompTIA, Inc. Practice questions are original study prompts, not real exam questions."
+    private static let comptiaDisclaimer = "PrepNexus is independent study software. It is not affiliated with, endorsed by, or sponsored by CompTIA. CompTIA, A+, and Security+ are trademarks of CompTIA, Inc. Practice questions are original study prompts, not real exam questions."
 
     static let aPlusCore1 = ExamProfile(
         id: "comptia-a-plus-core-1-220-1201",

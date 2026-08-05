@@ -76,7 +76,7 @@ final class StudyBuddyStore: ObservableObject {
     }
 
     @Published var aiServerStatus: AIServerStatus = .notChecked
-    @Published var aiServerMessage: String = "StudyBuddy will check the AI tutor server when the app starts."
+    @Published var aiServerMessage: String = "PrepNexus will check the AI tutor server when the app starts."
     @Published var aiServerModel: String = "--"
     @Published var aiServerOpenAIConfigured: Bool = false
     @Published var aiServerOpenAIKeyStatus: String = "missing"
@@ -379,11 +379,11 @@ final class StudyBuddyStore: ObservableObject {
 
         let nextStep: String
         if isFirstStudyRun {
-            nextStep = "First study run: take one 10-question Quick Practice test so StudyBuddy can measure your baseline and choose the next objective."
+            nextStep = "First study run: take one 10-question Quick Practice test so PrepNexus can measure your baseline and choose the next objective."
         } else if let firstWeak = domainPlan.first(where: { $0.readiness == .weak }) {
             nextStep = "Start with \(firstWeak.domainTitle), then run a targeted quick exam before moving on."
         } else if attemptsForSelectedExam.isEmpty {
-            nextStep = "Complete one quick test so StudyBuddy can tune the plan with real performance data."
+            nextStep = "Complete one quick test so PrepNexus can tune the plan with real performance data."
         } else {
             nextStep = "Keep cycling weak objectives, PBQs, and one full exam until your pass signal repeats."
         }
@@ -510,7 +510,7 @@ final class StudyBuddyStore: ObservableObject {
     func checkAIServerHealth() async {
         guard let baseURL = resolvedAIServerURL else {
             aiServerStatus = .offline
-            aiServerMessage = "Add your StudyBuddy AI server URL in Settings."
+            aiServerMessage = "Add your PrepNexus AI server URL in Settings."
             aiServerModel = "--"
             aiServerOpenAIConfigured = false
             aiServerOpenAIKeyStatus = "missing"
@@ -554,7 +554,7 @@ final class StudyBuddyStore: ObservableObject {
                 aiServerMessage = "AI server is online, but the saved key is not an OpenAI API key. OpenAI keys start with sk-."
             } else {
                 aiServerMessage = health.ok
-                    ? "AI tutor server is reachable for \(health.exams?.count ?? 0) StudyBuddy exams."
+                    ? "AI tutor server is reachable for \(health.exams?.count ?? 0) PrepNexus exams."
                     : "AI tutor server responded, but it is not healthy."
             }
         } catch {

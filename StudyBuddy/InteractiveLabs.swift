@@ -260,7 +260,7 @@ struct HandsOnLabsList: View {
             } header: {
                 Text("\(store.displayExamCode) environments")
             } footer: {
-                Text("StudyBuddy uses isolated educational simulations. Commands and configuration changes affect only the lab state, never the device or a real network.")
+                Text("PrepNexus uses isolated educational simulations. Commands and configuration changes affect only the lab state, never the device or a real network.")
             }
         }
         .listStyle(.insetGrouped)

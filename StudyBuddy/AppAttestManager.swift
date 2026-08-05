@@ -194,7 +194,7 @@ enum StudyBuddyAppAttestError: LocalizedError {
         case .invalidResponse:
             return "The App Attest server returned an unreadable response."
         case .keychain(let status):
-            return "StudyBuddy could not securely save its App Attest key (\(status))."
+            return "PrepNexus could not securely save its App Attest key (\(status))."
         case .server(_, let message):
             return message
         }
