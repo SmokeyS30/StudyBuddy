@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 import { APP_ATTEST_HEADERS, AppAttestError, AppAttestManager } from "./appAttest.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const SERVER_VERSION = "1.2.0";
+const SERVER_STARTED_AT = new Date().toISOString();
 
 loadDotEnv(path.join(__dirname, ".env"));
 
@@ -89,12 +91,17 @@ const server = http.createServer(async (request, response) => {
       sendJson(response, 200, {
         ok: true,
         service: "StudyBuddy AI Server",
+        version: SERVER_VERSION,
+        startedAt: SERVER_STARTED_AT,
         host: HOST,
         port: PORT,
         model: OPENAI_MODEL,
         openaiConfigured: isOpenAIConfigured(),
         openaiKeyStatus: openAIKeyStatus(),
         appAttest: appAttest.status(),
+        storage: {
+          persistentPathConfigured: DATA_DIR === "/var/data" || DATA_DIR.startsWith("/var/data/")
+        },
         exams: Object.values(EXAM_BLUEPRINTS).map((exam) => `${exam.name} ${exam.code}`)
       });
       return;
