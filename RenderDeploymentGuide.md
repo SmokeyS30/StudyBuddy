@@ -1,103 +1,113 @@
 # Deploy StudyBuddy AI Server On Render
 
-## Recommended Source
+## Current Production Target
 
-Use GitHub source code, not an image URL.
+- App: StudyBuddy `3.0` build `20`
+- Server package: `1.2.0`
+- Service URL: `https://studybuddy-ai-server-m5zi.onrender.com`
+- Health URL: `https://studybuddy-ai-server-m5zi.onrender.com/health`
+- Instance: Render Starter
+- Persistent disk: 1 GB mounted at `/var/data`
+- Initial App Attest mode: `monitor`
 
-You have two clean choices:
+Use GitHub source code, not an image URL. The Starter service keeps the AI server available without free-tier spin-down, and the disk preserves learner profiles plus registered App Attest public keys and counters across deploys.
 
-- Whole app repo: push the full `StudyBuddy` folder to GitHub. Render will use the root `render.yaml` and deploy only `AI_SERVER/`.
-- Server-only repo: push the contents of `AI_SERVER/` to a new GitHub repo. Use the `render.yaml` inside `AI_SERVER/`.
+## Which Blueprint To Use
 
-Do not commit `AI_SERVER/.env`. That file contains your local OpenAI key and is intentionally ignored and excluded from zips.
+- Whole StudyBuddy repository: use the root `render.yaml`. It sets `rootDir: AI_SERVER`.
+- Server-only repository containing the contents of `AI_SERVER/`: use `AI_SERVER/render.yaml` as that repository's root Blueprint.
 
-## Live Production URL
+Do not commit `AI_SERVER/.env`. The local file contains your OpenAI key and is intentionally ignored.
 
-Your Render service is live at:
+## Blueprint Settings
 
-```text
-https://studybuddy-ai-server-m5zi.onrender.com
+The included Blueprints configure:
+
+```yaml
+runtime: node
+plan: starter
+buildCommand: npm install
+startCommand: npm start
+healthCheckPath: /health
+disk:
+  name: studybuddy-data
+  mountPath: /var/data
+  sizeGB: 1
 ```
 
-Health check:
+They also set these non-secret environment values:
 
 ```text
-https://studybuddy-ai-server-m5zi.onrender.com/health
-```
-
-StudyBuddy version `2.5` build `11` uses this URL by default for new installs and migrates older saved placeholder or localhost defaults to this hosted server.
-
-## Render Settings
-
-If you create the Render Web Service manually, use:
-
-- Source: GitHub repo
-- Runtime: Node
-- Root Directory: `AI_SERVER` if you pushed the whole StudyBuddy project, blank if you pushed only the AI server files
-- Build Command: `npm install`
-- Start Command: `npm start`
-- Health Check Path: `/health`
-- Environment Variables:
-
-```bash
-OPENAI_API_KEY=sk-your-real-openai-key
 OPENAI_MODEL=gpt-5.6-terra
 HOST=0.0.0.0
-STUDYBUDDY_DATA_DIR=./data
+STUDYBUDDY_DATA_DIR=/var/data/studybuddy
 ALLOWED_ORIGINS=*
+APP_ATTEST_MODE=monitor
+APP_ATTEST_TEAM_ID=S6L62N62M4
+APP_ATTEST_BUNDLE_ID=com.smokeys30.studybuddy
+APP_ATTEST_ALLOW_DEVELOPMENT=false
 ```
 
-Do not set `PORT` manually unless Render tells you to. Render provides `PORT` for web services.
+`OPENAI_API_KEY` is declared with `sync: false`; enter its value in the Render dashboard. Do not set `PORT` manually because Render supplies it.
 
-## Step By Step
+## Apply The Update
 
-1. Create a new GitHub repo, for example `studybuddy-ai-server`.
-2. Upload the contents of `AI_SERVER/` to that repo, or upload the whole `StudyBuddy` project.
-3. In Render, choose `New` > `Web Service`.
-4. Select `Git Provider` and connect GitHub.
-5. Choose the repo.
-6. If using the whole StudyBuddy repo, set Root Directory to `AI_SERVER`.
-7. Set Build Command to `npm install`.
-8. Set Start Command to `npm start`.
-9. Set Health Check Path to `/health`.
-10. Add the environment variables above.
-11. Click `Create Web Service`.
-12. Wait for deploy to finish.
-13. Open:
-
-```text
-https://your-render-service-name.onrender.com/health
-```
-
-14. Confirm the JSON says:
+1. Push the updated StudyBuddy repository to GitHub.
+2. Sign in to Render and open the existing `studybuddy-ai-server` service or its Blueprint.
+3. Sync the latest Blueprint commit.
+4. Review the billing confirmation before applying it.
+5. Confirm the instance type is `Starter`.
+6. Confirm the disk is 1 GB and mounted at `/var/data`.
+7. Confirm `OPENAI_API_KEY` still has its secret value.
+8. Confirm `APP_ATTEST_MODE` is `monitor`, not `enforce`.
+9. Deploy the latest commit.
+10. Open the health URL and confirm a response shaped like:
 
 ```json
 {
   "ok": true,
   "openaiConfigured": true,
-  "openaiKeyStatus": "configured"
+  "openaiKeyStatus": "configured",
+  "appAttest": {
+    "mode": "monitor",
+    "configured": true
+  }
 }
 ```
 
-15. Copy the Render URL into StudyBuddy Settings as the AI Tutor Server URL if you use a different hosted service later.
+11. Test one AI action from build 19 to confirm backward compatibility.
+12. Upload build 20 to TestFlight and test an AI action on a physical iPhone.
+13. Follow `AppAttestDeploymentGuide.md` before changing App Attest to `enforce`.
 
-## Free Vs Paid Render
+## Persistent State
 
-The included `render.yaml` uses `plan: free` so you can test without choosing a paid instance immediately. A free service can be slower to wake up. For production TestFlight/App Store use, switch the Render service to a paid instance so the AI tutor is more consistently available.
+The server writes these files beneath `/var/data/studybuddy`:
 
-## Persistent Learning Profiles
+- `profiles.json`: adaptive learner profiles.
+- `app-attest.json`: verified public keys, receipts, assertion counters, and registration timestamps.
 
-The current server stores learning profiles in JSON under `data/`. On a free Render service this storage can reset after redeploys or restarts. For production, attach persistent storage or upgrade the server later to use a database.
+Do not delete the disk or `app-attest.json` during a routine deploy. Losing App Attest state forces installed apps to register a new key and can interrupt protected AI requests.
 
-## App Update After Deploy
+## Cost
 
-For local simulator testing with a manually started local server, set StudyBuddy Settings to:
+At current listed rates, budget approximately `$7.25/month` before bandwidth, OpenAI usage, workspace charges, and taxes:
+
+- Starter web service: about `$7/month`.
+- 1 GB persistent disk: `$0.25/month`.
+
+The disk is the extra `$0.25`; the Starter service itself is the larger part of the monthly hosting cost. Confirm the total shown by Render before accepting the plan change because prices can change.
+
+## Local Simulator
+
+For a manually started local server, use:
 
 ```text
 http://127.0.0.1:8787
 ```
 
-For TestFlight and real devices, StudyBuddy now defaults to your Render HTTPS URL:
+Local development may use `APP_ATTEST_ALLOW_DEVELOPMENT=true`. The simulator does not provide production App Attest, so final validation must use a physical device with the TestFlight build.
+
+For TestFlight and App Store installs, keep the default HTTPS URL:
 
 ```text
 https://studybuddy-ai-server-m5zi.onrender.com

@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { APP_ATTEST_HEADERS, AppAttestError, AppAttestManager } from "./appAttest.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -18,6 +19,19 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "*")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
+const APP_ATTEST_MODE = process.env.APP_ATTEST_MODE || "monitor";
+const APP_ATTEST_TEAM_ID = process.env.APP_ATTEST_TEAM_ID || "S6L62N62M4";
+const APP_ATTEST_BUNDLE_ID = process.env.APP_ATTEST_BUNDLE_ID || "com.smokeys30.studybuddy";
+const APP_ATTEST_ALLOW_DEVELOPMENT = parseBoolean(
+  process.env.APP_ATTEST_ALLOW_DEVELOPMENT,
+  HOST === "127.0.0.1" || HOST === "localhost"
+);
+const PROTECTED_API_PATHS = new Set([
+  "/api/tutor/mistake",
+  "/api/tutor/chat",
+  "/api/learning/attempt",
+  "/api/study-path"
+]);
 
 const EXAM_BLUEPRINTS = {
   "comptia-a-plus-core-1-220-1201": {
@@ -51,9 +65,19 @@ const SYSTEM_PROMPT = [
 
 await ensureDataFile();
 
+const appAttest = new AppAttestManager({
+  dataDir: DATA_DIR,
+  mode: APP_ATTEST_MODE,
+  teamIdentifier: APP_ATTEST_TEAM_ID,
+  bundleIdentifier: APP_ATTEST_BUNDLE_ID,
+  allowDevelopmentEnvironment: APP_ATTEST_ALLOW_DEVELOPMENT
+});
+await appAttest.initialize();
+
 const server = http.createServer(async (request, response) => {
   try {
     setCorsHeaders(request, response);
+    const requestPath = new URL(request.url || "/", "http://studybuddy.local").pathname;
 
     if (request.method === "OPTIONS") {
       response.writeHead(204);
@@ -61,7 +85,7 @@ const server = http.createServer(async (request, response) => {
       return;
     }
 
-    if (request.method === "GET" && request.url === "/health") {
+    if (request.method === "GET" && requestPath === "/health") {
       sendJson(response, 200, {
         ok: true,
         service: "StudyBuddy AI Server",
@@ -70,57 +94,87 @@ const server = http.createServer(async (request, response) => {
         model: OPENAI_MODEL,
         openaiConfigured: isOpenAIConfigured(),
         openaiKeyStatus: openAIKeyStatus(),
+        appAttest: appAttest.status(),
         exams: Object.values(EXAM_BLUEPRINTS).map((exam) => `${exam.name} ${exam.code}`)
       });
       return;
     }
 
-    if (request.method === "POST" && request.url === "/api/tutor/mistake") {
-      const context = await readJson(request);
-      const profileStore = await readProfiles();
-      const profile = getProfile(profileStore, context.studentId);
-      learnFromMistake(profile, context);
-
-      const fallback = buildTutorResponse(context, profile, "local");
-      const aiResponse = await buildOpenAITutorResponse(context, profile, fallback);
-      await writeProfiles(profileStore);
-      sendJson(response, 200, aiResponse);
+    if (request.method === "POST" && requestPath === "/api/app-attest/challenge") {
+      const payload = parseJson(await readBody(request));
+      sendJson(response, 200, await appAttest.issueChallenge(payload.purpose));
       return;
     }
 
-    if (request.method === "POST" && request.url === "/api/tutor/chat") {
-      const payload = await readJson(request);
-      const profileStore = await readProfiles();
-      const profile = getProfile(profileStore, payload.context?.studentId);
-
-      const chatResponse = await buildChatResponse(payload.context, payload.messages || [], profile);
-      await writeProfiles(profileStore);
-      sendJson(response, 200, chatResponse);
+    if (request.method === "POST" && requestPath === "/api/app-attest/register") {
+      const payload = parseJson(await readBody(request));
+      sendJson(response, 201, await appAttest.register(payload));
       return;
     }
 
-    if (request.method === "POST" && request.url === "/api/learning/attempt") {
-      const payload = await readJson(request);
-      const profileStore = await readProfiles();
-      const profile = getProfile(profileStore, payload.studentId);
-      learnFromAttempt(profile, payload);
+    if (request.method === "POST" && PROTECTED_API_PATHS.has(requestPath)) {
+      const rawBody = await readBody(request);
+      const verification = await appAttest.verifyProtectedRequest({
+        method: request.method,
+        requestPath,
+        rawBody,
+        headers: request.headers
+      });
+      response.setHeader("X-StudyBuddy-App-Attest-Status", verification.status);
+      const payload = parseJson(rawBody);
 
-      const weakestDomain = (payload.weakDomains || [])[0] || findWeakestDomain(profile, payload.examID);
-      await writeProfiles(profileStore);
-      sendJson(response, 200, buildAttemptResponse(payload, weakestDomain));
-      return;
-    }
+      if (requestPath === "/api/tutor/mistake") {
+        const context = payload;
+        const profileStore = await readProfiles();
+        const profile = getProfile(profileStore, context.studentId);
+        learnFromMistake(profile, context);
 
-    if (request.method === "POST" && request.url === "/api/study-path") {
-      const payload = await readJson(request);
-      const profileStore = await readProfiles();
-      const profile = getProfile(profileStore, payload.studentId);
-      sendJson(response, 200, buildStudyPath(payload, profile));
-      return;
+        const fallback = buildTutorResponse(context, profile, "local");
+        const aiResponse = await buildOpenAITutorResponse(context, profile, fallback);
+        await writeProfiles(profileStore);
+        sendJson(response, 200, aiResponse);
+        return;
+      }
+
+      if (requestPath === "/api/tutor/chat") {
+        const profileStore = await readProfiles();
+        const profile = getProfile(profileStore, payload.context?.studentId);
+
+        const chatResponse = await buildChatResponse(payload.context, payload.messages || [], profile);
+        await writeProfiles(profileStore);
+        sendJson(response, 200, chatResponse);
+        return;
+      }
+
+      if (requestPath === "/api/learning/attempt") {
+        const profileStore = await readProfiles();
+        const profile = getProfile(profileStore, payload.studentId);
+        learnFromAttempt(profile, payload);
+
+        const weakestDomain = (payload.weakDomains || [])[0] || findWeakestDomain(profile, payload.examID);
+        await writeProfiles(profileStore);
+        sendJson(response, 200, buildAttemptResponse(payload, weakestDomain));
+        return;
+      }
+
+      if (requestPath === "/api/study-path") {
+        const profileStore = await readProfiles();
+        const profile = getProfile(profileStore, payload.studentId);
+        sendJson(response, 200, buildStudyPath(payload, profile));
+        return;
+      }
     }
 
     sendJson(response, 404, { error: "Route not found" });
   } catch (error) {
+    if (error instanceof AppAttestError) {
+      sendJson(response, error.statusCode, {
+        error: "App Attest verification failed",
+        code: error.code
+      });
+      return;
+    }
+
     sendJson(response, 500, {
       error: "StudyBuddy AI server error",
       detail: error instanceof Error ? error.message : String(error)
@@ -130,7 +184,12 @@ const server = http.createServer(async (request, response) => {
 
 server.listen(PORT, HOST, () => {
   console.log(`StudyBuddy AI server running on http://${HOST}:${PORT}`);
+  console.log(`App Attest mode: ${appAttest.status().mode}`);
 });
+
+/*
+ * AI tutor and adaptive-learning helpers
+ */
 
 function loadDotEnv(envPath) {
   try {
@@ -593,15 +652,28 @@ function summarizeProfile(profile, examID) {
   };
 }
 
-async function readJson(request) {
+async function readBody(request) {
   const chunks = [];
+  let totalBytes = 0;
   for await (const chunk of request) {
+    totalBytes += chunk.length;
+    if (totalBytes > 1_048_576) {
+      throw new AppAttestError("request_too_large", "The request body is too large.", 413);
+    }
     chunks.push(chunk);
   }
 
-  const raw = Buffer.concat(chunks).toString("utf8");
+  return Buffer.concat(chunks);
+}
+
+function parseJson(rawBody) {
+  const raw = rawBody.toString("utf8");
   if (!raw) return {};
-  return JSON.parse(raw);
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new AppAttestError("request_invalid_json", "The request body is not valid JSON.", 400);
+  }
 }
 
 function sendJson(response, statusCode, payload) {
@@ -616,5 +688,14 @@ function setCorsHeaders(request, response) {
     : ALLOWED_ORIGINS.includes(requestOrigin) ? requestOrigin : ALLOWED_ORIGINS[0];
   response.setHeader("Access-Control-Allow-Origin", allowOrigin);
   response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-  response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  response.setHeader(
+    "Access-Control-Allow-Headers",
+    ["Content-Type", "Authorization", ...Object.values(APP_ATTEST_HEADERS)].join(",")
+  );
+  response.setHeader("Access-Control-Expose-Headers", "X-StudyBuddy-App-Attest-Status");
+}
+
+function parseBoolean(value, fallback) {
+  if (value === undefined || value === null || value === "") return fallback;
+  return ["1", "true", "yes", "on"].includes(String(value).trim().toLowerCase());
 }

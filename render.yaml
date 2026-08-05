@@ -7,7 +7,11 @@ services:
     startCommand: npm start
     healthCheckPath: /health
     autoDeployTrigger: commit
-    plan: free
+    plan: starter
+    disk:
+      name: studybuddy-data
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: 24
@@ -16,8 +20,16 @@ services:
       - key: OPENAI_MODEL
         value: gpt-5.6-terra
       - key: STUDYBUDDY_DATA_DIR
-        value: ./data
+        value: /var/data/studybuddy
       - key: ALLOWED_ORIGINS
         value: "*"
+      - key: APP_ATTEST_MODE
+        value: monitor
+      - key: APP_ATTEST_TEAM_ID
+        value: S6L62N62M4
+      - key: APP_ATTEST_BUNDLE_ID
+        value: com.smokeys30.studybuddy
+      - key: APP_ATTEST_ALLOW_DEVELOPMENT
+        value: "false"
       - key: OPENAI_API_KEY
         sync: false

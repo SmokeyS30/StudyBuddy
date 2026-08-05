@@ -41,8 +41,8 @@ Important: the bundle identifier must be unique across all App Store apps.
 ## 4. Set version and build
 
 1. Still on the `StudyBuddy` target, open the General tab.
-2. For this update, set Version to `2.7`.
-3. For this update, set Build to `17`.
+2. For this update, set Version to `3.0`.
+3. For this update, set Build to `20`.
 4. Each time you upload another TestFlight build, increase Build:
    - First upload: `1`
    - Second upload: `2`
@@ -55,6 +55,8 @@ Important: the bundle identifier must be unique across all App Store apps.
    - Full reset/streak/question-choice fix: `15`
    - Reset returns to Today page fix: `16`
    - App Store closed train fix: `17`
+   - Hands-on lab environments: `19`
+   - Apple App Attest and persistent Render state: `20`
 
 Apple will not accept two uploads with the same version and build number.
 
@@ -76,10 +78,11 @@ Apple will not accept two uploads with the same version and build number.
 8. Start an exam simulation and verify PBQ matching, drag-to-order items, timer, submission, and score review.
 9. Open Results and switch between A+ Core 1, A+ Core 2, and Security+ to confirm each exam has its own progress screen.
 10. Open Learn > Sheets and confirm each PDF opens inside the app.
-11. Open Learn and confirm there is no Labs option in the Learn mode menu.
+11. Open Learn > Labs and confirm the two interactive environments for the selected exam work in Guided and Challenge modes.
 12. Open Settings and confirm the AI Tutor Server URL is `https://studybuddy-ai-server-m5zi.onrender.com`.
 13. Tap `Check AI Server Now` and confirm the status is `Online` and the OpenAI key says `Configured`.
-14. Close and reopen the app to confirm progress stays saved.
+14. After the build-20 server deploy, confirm Settings shows App Attest as `Monitor`.
+15. Close and reopen the app to confirm progress stays saved.
 
 ## 6. Run on your iPhone
 
@@ -131,6 +134,8 @@ If Archive is disabled, make sure the selected destination is `Any iOS Device`, 
 7. If Xcode offers to strip Swift symbols or upload debug symbols, keep the default recommended options.
 8. Click Upload.
 
+The repository also includes `AppStoreExportOptions.plist` for an authenticated command-line upload from a valid archive. Xcode Organizer remains the easiest manual fallback if Apple asks for an interactive sign-in or agreement.
+
 After upload, Apple may take several minutes to process the build.
 
 ## 10. Finish TestFlight setup
@@ -176,6 +181,8 @@ Recommended privacy answer for this AI-enabled build:
 
 Disclose study performance data if the hosted AI tutor server remains enabled. StudyBuddy may send exam selection, selected answers, scores, inferred confidence signals, weak objectives, and study activity to your server for app functionality and personalization. Do not choose `Data Not Collected` while the AI tutor server is enabled by default.
 
+For build 20, conservatively disclose `Identifiers > Device ID` for `App Functionality`, linked to the device, and not used for tracking. StudyBuddy stores an app-scoped App Attest key identifier and related integrity state on its server to prevent fraud and replay. Also confirm the existing usage/study-data disclosures still match the live server. App Store Connect answers must describe the behavior of the build being submitted.
+
 ## 13. Important education and trademark notes
 
 1. Keep the app name as `StudyBuddy`.
@@ -210,7 +217,7 @@ Open `Assets.xcassets`, select `AppIcon`, and confirm the 1024x1024 icon is pres
 
 ### App Store asks for privacy details
 
-Complete App Privacy in App Store Connect. If you keep the current app local-only, choose no data collected.
+Complete App Privacy in App Store Connect. Do not choose `Data Not Collected` for build 20 while the hosted AI tutor and App Attest flows are enabled.
 
 ## 15. Suggested TestFlight test checklist
 
@@ -246,10 +253,11 @@ Ask testers to check:
 28. Plan shows an AI study target with daily minutes, suggested exam date, and domain time targets.
 29. Completed Plan topics show adaptive follow-up guidance.
 30. Learn > Sheets opens readable in-app PDFs.
-31. Learn no longer shows the old Labs section.
+31. Learn > Labs shows two interactive environments for each selected exam, and Guided and Challenge modes both open correctly.
 32. Settings can reset progress for the current exam.
 33. Text is readable on smaller iPhones.
 34. The disclaimer is visible in Learn and Settings.
+35. On a physical TestFlight device, an AI tutor action succeeds and the server remains healthy with App Attest in `monitor` mode.
 
 ## 16. When you are ready for full App Store review
 

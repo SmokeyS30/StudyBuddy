@@ -80,6 +80,7 @@ final class StudyBuddyStore: ObservableObject {
     @Published var aiServerModel: String = "--"
     @Published var aiServerOpenAIConfigured: Bool = false
     @Published var aiServerOpenAIKeyStatus: String = "missing"
+    @Published var aiServerAppAttestMode: String = "Not available"
     @Published private(set) var resetNavigationToken = 0
 
     let aiStudentID: String
@@ -513,6 +514,7 @@ final class StudyBuddyStore: ObservableObject {
             aiServerModel = "--"
             aiServerOpenAIConfigured = false
             aiServerOpenAIKeyStatus = "missing"
+            aiServerAppAttestMode = "Not available"
             return
         }
 
@@ -534,6 +536,7 @@ final class StudyBuddyStore: ObservableObject {
                 aiServerModel = "--"
                 aiServerOpenAIConfigured = false
                 aiServerOpenAIKeyStatus = "missing"
+                aiServerAppAttestMode = "Not available"
                 return
             }
 
@@ -542,6 +545,11 @@ final class StudyBuddyStore: ObservableObject {
             aiServerModel = health.model ?? "--"
             aiServerOpenAIConfigured = health.openaiConfigured ?? false
             aiServerOpenAIKeyStatus = health.openaiKeyStatus ?? (aiServerOpenAIConfigured ? "configured" : "missing")
+            if let appAttest = health.appAttest, appAttest.configured {
+                aiServerAppAttestMode = appAttest.mode.capitalized
+            } else {
+                aiServerAppAttestMode = "Not configured"
+            }
             if health.ok && aiServerOpenAIKeyStatus == "invalid-prefix" {
                 aiServerMessage = "AI server is online, but the saved key is not an OpenAI API key. OpenAI keys start with sk-."
             } else {
@@ -555,6 +563,7 @@ final class StudyBuddyStore: ObservableObject {
             aiServerModel = "--"
             aiServerOpenAIConfigured = false
             aiServerOpenAIKeyStatus = "missing"
+            aiServerAppAttestMode = "Not available"
         }
     }
 

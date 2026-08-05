@@ -313,7 +313,13 @@ struct AIServerHealthResponse: Codable, Hashable {
     let model: String?
     let openaiConfigured: Bool?
     let openaiKeyStatus: String?
+    let appAttest: AppAttestHealthResponse?
     let exams: [String]?
+}
+
+struct AppAttestHealthResponse: Codable, Hashable {
+    let mode: String
+    let configured: Bool
 }
 
 struct AITutorAssignment: Identifiable, Codable, Hashable {

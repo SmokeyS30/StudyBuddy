@@ -3849,18 +3849,50 @@ struct StudyBuddyAIClient {
         try await post("api/learning/attempt", body: upload)
     }
 
-    private func post<RequestBody: Encodable, ResponseBody: Decodable>(_ path: String, body: RequestBody) async throws -> ResponseBody {
+    private func post<RequestBody: Encodable, ResponseBody: Decodable>(
+        _ path: String,
+        body: RequestBody,
+        canRetryAppAttest: Bool = true
+    ) async throws -> ResponseBody {
         var url = baseURL
         url.append(path: path)
 
+        let bodyData = try JSONEncoder().encode(body)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try JSONEncoder().encode(body)
+        request.httpBody = bodyData
+
+        do {
+            let headers = try await StudyBuddyAppAttest.shared.authorizationHeaders(
+                baseURL: baseURL,
+                method: "POST",
+                path: path,
+                body: bodyData
+            )
+            for (name, value) in headers {
+                request.setValue(value, forHTTPHeaderField: name)
+            }
+        } catch {
+            #if DEBUG
+            print("App Attest is temporarily unavailable: \(error.localizedDescription)")
+            #endif
+        }
 
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw StudyBuddyAIError.invalidResponse
+        }
+
+        if httpResponse.statusCode == 401,
+           canRetryAppAttest,
+           let serverError = try? JSONDecoder().decode(AppAttestServerError.self, from: data),
+           let code = serverError.code,
+           code.hasPrefix("app_attest_") {
+            if code != "app_attest_challenge_expired" {
+                await StudyBuddyAppAttest.shared.resetKey()
+            }
+            return try await post(path, body: body, canRetryAppAttest: false)
         }
 
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -3917,6 +3949,7 @@ struct SettingsView: View {
                     LabeledContent("Status", value: store.aiServerStatus.rawValue)
                     LabeledContent("Model", value: store.aiServerModel)
                     LabeledContent("OpenAI key", value: openAIKeyLabel)
+                    LabeledContent("App Attest", value: store.aiServerAppAttestMode)
                     LabeledContent("Student profile", value: String(store.aiStudentID.prefix(8)))
                     Button {
                         Task {
@@ -3945,10 +3978,22 @@ struct SettingsView: View {
 
                 Section("Updates") {
                     LabeledContent("Version", value: "3.0")
-                    LabeledContent("Build", value: "19")
+                    LabeledContent("Build", value: "20")
                     LabeledContent("Update channel", value: "TestFlight/App Store")
                     LabeledContent("Automatic updates", value: "Managed by iOS")
                     LabeledContent("Compatibility", value: "SwiftUI, iOS 17+")
+                }
+
+                Section("Legal & Support") {
+                    Link(destination: URL(string: "https://smokeys30.github.io/StudyBuddy/Support.html")!) {
+                        Label("StudyBuddy Support", systemImage: "questionmark.circle")
+                    }
+                    Link(destination: URL(string: "https://smokeys30.github.io/StudyBuddy/PrivacyPolicy.html")!) {
+                        Label("Privacy Policy", systemImage: "hand.raised")
+                    }
+                    Link(destination: URL(string: "mailto:edwardbloomfield@mac.com?subject=StudyBuddy%20Support")!) {
+                        Label("Email Support", systemImage: "envelope")
+                    }
                 }
 
                 Section("Progress") {

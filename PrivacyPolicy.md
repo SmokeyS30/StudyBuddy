@@ -1,6 +1,6 @@
 # StudyBuddy Privacy Policy
 
-Effective Date: July 20, 2026
+Effective Date: August 5, 2026
 
 StudyBuddy helps users prepare for exams with study plans, flashcards, practice questions, progress tracking, exam simulations, and AI-assisted tutoring.
 
@@ -27,6 +27,7 @@ StudyBuddy may collect the following study-related data:
 - Confidence estimates, guessed-answer counts, flagged-question counts, PBQ score, and time spent
 - AI Tutor chat messages and follow-up questions
 - AI Tutor assignments, study recommendations, and weak-area history
+- An App Attest cryptographic key identifier, integrity attestation, assertion counters, and related security status
 
 This data is used to provide app functionality and personalize the learning experience.
 
@@ -43,6 +44,7 @@ StudyBuddy stores study progress locally on your device. This may include:
 - App-open streak history
 - Optional personal study notes entered by the user
 - A random student profile ID used by the AI Tutor Server
+- An App Attest key identifier stored securely in the device Keychain
 
 ## Data Sent to the AI Tutor Server
 
@@ -50,15 +52,31 @@ StudyBuddy uses a hosted AI Tutor Server to provide adaptive coaching. When user
 
 The AI Tutor Server stores a learning profile connected to the random StudyBuddy student profile ID. This profile helps StudyBuddy remember weak domains, missed objectives, confidence patterns, and recent attempts.
 
+StudyBuddy uses Apple's App Attest service to help confirm that AI Tutor requests come from a genuine copy of StudyBuddy running on an Apple device. The app may send a cryptographic key identifier, Apple attestation object, integrity receipt, signed assertions, and an increasing assertion counter to the AI Tutor Server. These security values are used for app integrity, fraud prevention, replay protection, and server security. They are not used for advertising or cross-app tracking.
+
+StudyBuddy does not collect a device serial number, advertising identifier, precise hardware identifier, or location through App Attest. App Attest keys are scoped to StudyBuddy and the app installation.
+
 ## Third-Party Services
 
 StudyBuddy does not use third-party advertising networks, analytics SDKs, or data brokers.
 
 The StudyBuddy AI Tutor Server may use OpenAI to generate coaching responses. OpenAI API keys are stored on the server, not in the app. Study data sent to the AI Tutor Server may be included in requests to OpenAI only for generating tutoring, explanations, study recommendations, and related app functionality.
 
+StudyBuddy uses Apple's DeviceCheck App Attest service for app-integrity verification. Apple processes attestation requests under Apple's applicable privacy terms. App Attest security values are not sent to OpenAI for tutoring.
+
 ## Tracking
 
 StudyBuddy does not track users across apps or websites. StudyBuddy does not share data with data brokers or advertising networks.
+
+## Retention And Deletion
+
+Study progress stored on the device remains until the user resets progress, deletes the app, or iOS removes the app's data. Reset All Progress clears local StudyBuddy progress but does not automatically erase the separate AI Tutor learning profile stored on the server.
+
+Server learning profiles and App Attest security records are retained while needed to provide adaptive learning, protect the service, maintain request counters, and investigate abuse. To request deletion of a server learning profile, contact edwardbloomfield@mac.com and include the Student profile code shown in StudyBuddy Settings.
+
+## Security
+
+StudyBuddy uses HTTPS for the hosted AI Tutor Server, keeps the OpenAI API key on the server, uses Apple App Attest for app-integrity checks on supported devices, and limits stored learning data to what is needed for the features described in this policy. No method of storage or transmission can be guaranteed to be completely secure.
 
 ## Data Not Collected
 
@@ -91,6 +109,6 @@ This privacy policy may be updated if StudyBuddy adds new features or changes ho
 
 ## Contact
 
-For privacy questions, contact:
+For privacy questions or data requests, contact:
 
 edwardbloomfield@mac.com

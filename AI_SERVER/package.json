@@ -1,15 +1,18 @@
 {
   "name": "studybuddy-ai-server",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Server-side AI tutor and adaptive learning engine for StudyBuddy.",
   "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "check": "node --check server.js"
+    "check": "node --check server.js && node --check appAttest.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18"
   },
-  "dependencies": {}
+  "dependencies": {
+    "node-app-attest": "^1.0.1"
+  }
 }

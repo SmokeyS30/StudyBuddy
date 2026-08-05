@@ -1,6 +1,15 @@
-# StudyBuddy 3.0 Build 19
+# StudyBuddy 3.0 Build 20
 
 ## What This Release Adds
+
+- Adds Apple App Attest registration and signed assertions to protected AI tutor and adaptive-learning requests.
+- Uses one-time server challenges and monotonic counters to detect replayed requests.
+- Stores the App Attest private key in Apple's protected device service and stores only its key identifier in the iOS Keychain.
+- Starts the server in `monitor` mode so build 19 remains compatible during the build-20 rollout.
+- Configures Render Starter with a 1 GB persistent disk for learner profiles and App Attest key state.
+- Adds App Attest health status to Settings.
+
+Build 20 includes all hands-on lab functionality introduced in build 19:
 
 - Replaces decision-question labs with stateful, hands-on training environments.
 - Adds two original environments for each supported exam.
@@ -39,8 +48,11 @@
 
 ## Verified
 
-- iPhoneOS build passed with code signing disabled.
+- Node syntax checks passed.
+- Five App Attest server tests passed, including registration, signed-request verification, replay rejection, and monitor/enforce behavior.
 - iPhone 17 Pro simulator build passed.
+- A signed Release archive passed with bundle ID `com.smokeys30.studybuddy`, Team ID `S6L62N62M4`, and the production App Attest entitlement.
+- Legacy build-19-style AI requests remain accepted while the server is in `monitor` mode.
 - App launch and Learn > Labs navigation passed.
 - Typed terminal command parsing, changing DNS state, guided command shortcuts, scoring, and results passed.
 - Support workstation Event Log and Services interactions passed.
@@ -50,11 +62,13 @@
 ## Version Info For Xcode
 
 - Marketing Version: `3.0`
-- Build: `19`
+- Build: `20`
 - Bundle ID: `com.smokeys30.studybuddy`
 - iOS target: `iOS 17+`
 - Main project file: `StudyBuddy.xcodeproj`
 - Hosted AI server: `https://studybuddy-ai-server-m5zi.onrender.com`
+- AI server package: `1.2.0`
+- Initial App Attest server mode: `monitor`
 
 ## Xcode Test Steps
 
@@ -72,6 +86,7 @@
 12. Confirm each results screen shows score, elapsed time, completed objectives, missing work, and recent activity.
 13. Repeat selected environments in Challenge mode and confirm coaching and command shortcuts are hidden.
 14. Reset all progress in Settings and confirm environment best scores clear with the rest of StudyBuddy.
+15. Install build 20 through TestFlight on a physical iPhone, use an AI tutor feature, and confirm Settings reports App Attest mode `Monitor` after the updated server is deployed.
 
 ## Important Note
 

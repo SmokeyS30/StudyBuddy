@@ -11,6 +11,8 @@ The support workstation, printer workbench, firewall console, packet tester, and
 
 The app uses original StudyBuddy interface assets and original exam-objective-aligned scenarios. It does not contain copied certification exam questions, exam dumps, official vendor logos, or claims of vendor endorsement.
 
+The optional AI tutor communicates with the StudyBuddy HTTPS server. Build 20 uses Apple's App Attest service to register an app-scoped key and sign protected AI requests. App Attest is used only to verify app integrity and reduce unauthorized or replayed server requests. It is not used for advertising or tracking. No account or login is required to review the app.
+
 Review path:
 1. Open Learn.
 2. Open the mode menu and select Labs.
@@ -27,6 +29,7 @@ Review path:
 - Keep `StudyBuddy` as the app name and use certification names only to describe compatibility or study coverage.
 - Keep the independent-study disclaimer visible in the app and metadata.
 - Confirm the AI server is online for AI tutor review, although the hands-on labs themselves work locally.
+- Keep `APP_ATTEST_MODE=monitor` during initial review so unsupported environments and the preceding public build remain compatible; validate production App Attest on a physical TestFlight device before enforcement.
 - Include screenshots showing the lab inside StudyBuddy navigation so it cannot be mistaken for an alternate iOS Home Screen.
 
 The design is intended to align with Apple's self-contained-app and intellectual-property requirements, but App Review decisions remain Apple's. Recheck the current guidelines before each submission:

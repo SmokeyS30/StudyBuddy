@@ -5,14 +5,18 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 ## Current Release
 
 - Version: `3.0`
-- Build: `19`
-- Release focus: six stateful, touch-friendly training environments with a typed command terminal, printer workbench, support workstations, firewall rule editor, packet tester, SOC dashboard, persistent grading, and TestFlight readiness.
+- Build: `20`
+- Release focus: Apple App Attest protection for AI and adaptive-learning requests, a staged rollout that remains compatible with build 19, and Render Starter hosting with persistent learner and attestation state.
 - Main project: `StudyBuddy.xcodeproj`
 - AI server: `AI_SERVER/`
 - App Store/TestFlight guide: `TestFlightGuide.md`
+- App Store upload configuration: `AppStoreExportOptions.plist`
 - Release action guide: `ReleaseNotes_3.0.md`
 - App Review notes: `AppReviewNotes_3.0.md`
+- App Store privacy answers: `AppPrivacyAnswers.md`
+- Public support source: `Support.md` and `Support.html`
 - Render hosting guide: `RenderDeploymentGuide.md`
+- App Attest rollout guide: `AppAttestDeploymentGuide.md`
 
 ## What is included
 
@@ -35,10 +39,11 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 - Plan tab AI study target with recommended daily minutes, suggested exam date, domain-by-domain time targets, and adaptive follow-up after tasks are completed.
 - Learn tab in-app PDF cheat sheets rendered with PDFKit.
 - Optional AI tutor server in `AI_SERVER/` that learns from full attempts and missed-question reviews for all three exams.
+- Apple App Attest registration and signed assertions for protected AI requests on supported physical devices.
 - Automatic AI server startup support for Xcode simulator runs through the shared `StudyBuddy` scheme.
 - A welcoming splash screen that appears when the app opens and stays visible for about 5 seconds.
 - Settings tab for changing the active exam, displayed exam label, personal focus notes, all-progress reset, and AI server URL.
-- Local storage with `UserDefaults`. The app only makes network calls when you configure the optional AI tutor server.
+- Local study storage with `UserDefaults`, plus HTTPS calls to the configured AI tutor server for health checks and AI-enabled learning features.
 - A simple app icon asset and App Store/TestFlight checklist.
 - A detailed Xcode-to-TestFlight walkthrough in `TestFlightGuide.md`.
 - An update and future iOS maintenance plan in `UpdateAndMaintenancePlan.md`.
@@ -87,6 +92,8 @@ Your local `AI_SERVER/.env` file is intentionally excluded from `StudyBuddy.zip`
 
 For Render hosting, read `RenderDeploymentGuide.md`. The project includes a root `render.yaml` for deploying the full StudyBuddy repo and an `AI_SERVER/render.yaml` for deploying a server-only repo.
 
+Build 20 adds Apple App Attest to the AI request flow. The server initially uses `APP_ATTEST_MODE=monitor`, which validates build-20 assertions without blocking build 19. After build 20 has been verified on a physical TestFlight device and adoption is high enough, follow `AppAttestDeploymentGuide.md` to change the server to `enforce`.
+
 ## Fine-tune exam content
 
 Edit `StudyBuddy/ExamCatalog.swift`.
@@ -116,6 +123,7 @@ StudyBuddy uses CompTIA-style scaled-score estimates on a 100-900 range with pub
 
 - App category: Education.
 - Privacy: If you enable the AI tutor server, disclose that exam performance, selected answers, inferred confidence signals, and study activity may be sent to your server for personalization.
+- Privacy: Build 20 also sends an App Attest key identifier, attestation material, signed assertions, and anti-replay counters to protect the AI service. These values are used for app functionality and security, not advertising or tracking.
 - Suggested age rating: 4+ unless you add web access, social features, or user-generated content.
 - Do not imply endorsement by CompTIA. Keep the app name as `StudyBuddy`, not `CompTIA StudyBuddy`.
 - Before release, compare all objectives and weights against the current official CompTIA 220-1201, 220-1202, and Security+ objectives PDFs.

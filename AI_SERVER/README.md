@@ -4,9 +4,9 @@ This is the server-side AI tutor and adaptive learning engine for StudyBuddy. Ke
 
 ## Current Status
 
-- App version: `2.6`
-- App build: `14`
-- Server package version: `1.1.0`
+- App version: `3.0`
+- App build: `20`
+- Server package version: `1.2.0`
 - Server model: `gpt-5.6-terra`
 - Hosted Render URL: `https://studybuddy-ai-server-m5zi.onrender.com`
 - Local health check: `openaiConfigured: true`
@@ -22,6 +22,8 @@ This is the server-side AI tutor and adaptive learning engine for StudyBuddy. Ke
 - Assigns targeted questions, spaced flashcards, PBQ drills, and video review after mistakes.
 - Supports the app's Results and Plan flow by learning from repeated attempts, inferred confidence signals, weak objectives, and recovery exams.
 - Runs with local fallback coaching when no OpenAI key is configured.
+- Registers Apple App Attest keys and verifies signed assertions for protected AI routes.
+- Supports `off`, `monitor`, and `enforce` rollout modes so older builds can remain usable during migration.
 
 ## Local Setup
 
@@ -46,6 +48,10 @@ OPENAI_API_KEY=sk-your-key-here
 OPENAI_MODEL=gpt-5.6-terra
 PORT=8787
 HOST=127.0.0.1
+APP_ATTEST_MODE=monitor
+APP_ATTEST_TEAM_ID=S6L62N62M4
+APP_ATTEST_BUNDLE_ID=com.smokeys30.studybuddy
+APP_ATTEST_ALLOW_DEVELOPMENT=true
 ```
 
 6. Start the server:
@@ -80,7 +86,7 @@ curl http://127.0.0.1:8787/health
 
 ## Startup Behavior
 
-The iOS app checks `/health` automatically when StudyBuddy opens and keeps retrying in the background. In `Settings`, the app shows whether the AI server is online, which model the server reports, and whether the OpenAI key is configured on the server.
+The iOS app checks `/health` automatically when StudyBuddy opens and keeps retrying in the background. In `Settings`, the app shows whether the AI server is online, which model the server reports, whether the OpenAI key is configured, and which App Attest mode the server reports.
 
 The iOS app cannot start Node.js by itself on an iPhone or in TestFlight. For local simulator testing, the Xcode scheme runs `ensure-ai-server.command` before launch. For TestFlight or App Store, host this server so it is already running at an HTTPS URL.
 
@@ -125,11 +131,17 @@ OPENAI_MODEL=gpt-5.6-terra
 HOST=0.0.0.0
 STUDYBUDDY_DATA_DIR=./data
 ALLOWED_ORIGINS=*
+APP_ATTEST_MODE=monitor
+APP_ATTEST_TEAM_ID=S6L62N62M4
+APP_ATTEST_BUNDLE_ID=com.smokeys30.studybuddy
+APP_ATTEST_ALLOW_DEVELOPMENT=false
 ```
 
 Do not set `PORT` manually on Render unless Render tells you to. Render provides the `PORT` value for web services, and the server now binds to `0.0.0.0` automatically when a production port is supplied.
 
-For production, use persistent storage for `STUDYBUDDY_DATA_DIR` so student learning profiles are not erased when the server restarts.
+For production, use persistent storage for `STUDYBUDDY_DATA_DIR` so student learning profiles and registered App Attest public keys are not erased when the server restarts. The included Render Blueprint uses `/var/data/studybuddy` on a 1 GB persistent disk.
+
+Keep `APP_ATTEST_MODE=monitor` while build 19 is still active. After the updated server and build 20 have been tested together on a physical TestFlight device, change the value to `enforce`. See `../AppAttestDeploymentGuide.md` for validation and rollback steps.
 
 ## Cost Estimate
 
@@ -147,6 +159,8 @@ Budget around `$0.01` to `$0.02` per AI tutor interaction because longer chats, 
 ## API Endpoints
 
 - `GET /health`
+- `POST /api/app-attest/challenge`
+- `POST /api/app-attest/register`
 - `POST /api/tutor/mistake`
 - `POST /api/tutor/chat`
 - `POST /api/learning/attempt`
@@ -154,7 +168,7 @@ Budget around `$0.01` to `$0.02` per AI tutor interaction because longer chats, 
 
 ## Privacy Notes
 
-The app sends study context, not account passwords or payment information. Before launch, update your privacy policy to disclose that StudyBuddy may send exam performance, selected answers, inferred confidence signals, and study activity to your AI tutoring server to personalize learning.
+The app sends study context, not account passwords or payment information. Build 20 also sends an App Attest key identifier, Apple attestation object, integrity receipt, signed assertions, and anti-replay counters for app-integrity checks. These security values are not used for advertising or tracking.
 
 ## Legal Notes
 

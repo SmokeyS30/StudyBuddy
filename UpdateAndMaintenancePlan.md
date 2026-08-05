@@ -32,6 +32,8 @@ Use this pattern:
 - Version `2.6`, Build `15`: complete all-progress reset with Today-tab navigation, app-open streak tracking, and four-choice protection for randomized practice questions.
 - Version `2.6`, Build `16`: reset confirmation now directly returns the app to the Today page after clearing all progress.
 - Version `2.7`, Build `17`: App Store Connect upload fix after the `2.6` pre-release train closed.
+- Version `3.0`, Build `19`: six stateful hands-on lab environments with guided and challenge modes.
+- Version `3.0`, Build `20`: Apple App Attest for protected AI requests, staged legacy-build compatibility, and Render Starter persistent storage.
 
 Every upload to App Store Connect must use a build number that has not already been uploaded for that version.
 
