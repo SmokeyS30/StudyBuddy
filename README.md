@@ -1,13 +1,16 @@
-# StudyBuddy
+# PrepNexus: IT Certs
 
-StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned first for CompTIA A+ Core 1 220-1201, CompTIA A+ Core 2 220-1202, and CompTIA Security+ SY0-701.
+PrepNexus is a native iOS and Android exam-study app, tuned first for CompTIA A+ Core 1 220-1201, CompTIA A+ Core 2 220-1202, and CompTIA Security+ SY0-701.
 
 ## Current Release
 
-- Version: `3.1`
-- Build: `21`
+- iOS version/build: `3.2 (22)`
+- Android version/code: `1.0 (1)`
 - Release focus: enforced Apple App Attest protection for AI and adaptive-learning requests, plus Render Starter hosting with persistent learner and attestation state.
 - Main project: `StudyBuddy.xcodeproj`
+- Android project: `Android/`
+- Android Studio and Google Play guide: `AndroidMigrationGuide.md`
+- Google Play data-safety checklist: `GooglePlayDataSafety.md`
 - AI server: `AI_SERVER/`
 - App Store/TestFlight guide: `TestFlightGuide.md`
 - App Store upload configuration: `AppStoreExportOptions.plist`
@@ -56,6 +59,16 @@ StudyBuddy is a native SwiftUI iOS app starter for exam study planning, tuned fi
 4. Change the bundle identifier from `com.example.studybuddy` to one you own, for example `com.yourcompany.studybuddy`.
 5. Run on an iPhone simulator or connected iPhone.
 
+## Open On Android
+
+1. Open Android Studio.
+2. Choose **Open** and select the `Android` folder.
+3. Let Gradle sync with Android Studio's bundled JDK.
+4. Select a phone, tablet, resizable, or foldable API 36 device.
+5. Run the `app` configuration.
+
+The Android client uses adaptive window layouts, so Fold-class devices receive compact navigation while folded and two-pane navigation, learning, practice, results, and lab layouts when unfolded. See `AndroidMigrationGuide.md` for signing and Google Play internal testing.
+
 ## TestFlight path
 
 For the full upload path, read `TestFlightGuide.md`.
@@ -64,7 +77,7 @@ For the full upload path, read `TestFlightGuide.md`.
 
 The iOS app can call the optional Node server in `AI_SERVER/` after a practice exam or missed-question review. The server keeps the OpenAI API key off the device, stores a per-student learning profile, and returns Socratic coaching, weak-objective assignments, PBQ drills, flashcards, scenario review, and video review tasks.
 
-StudyBuddy automatically checks the AI server `/health` endpoint when the app opens and keeps retrying in the background. The user does not need to press a button to connect. The status appears in `Settings` under `AI Tutor Server`.
+PrepNexus automatically checks the AI server `/health` endpoint when the app opens and keeps retrying in the background. The user does not need to press a button to connect. The status appears in `Settings` under `AI Tutor Server`.
 
 The local AI server was verified with OpenAI billing enabled. A sample AI tutor interaction returned `source: openai`. That measured request used `310` input tokens and `567` output tokens, about `$0.0093` on `gpt-5.6-terra` at the listed pricing of `$2.50` per 1M input tokens and `$15.00` per 1M output tokens.
 
@@ -74,7 +87,7 @@ Hosted production server:
 https://studybuddy-ai-server-m5zi.onrender.com
 ```
 
-StudyBuddy uses this Render URL as the default AI Tutor Server URL for new installs and migrates older saved placeholder or localhost defaults to it. You can still enter a different server URL in Settings if you host another backend later.
+PrepNexus uses this Render URL as the default AI Tutor Server URL for new installs and migrates older saved placeholder or localhost defaults to it. You can still enter a different server URL in Settings if you host another backend later.
 
 For local simulator testing with a local Node server:
 
@@ -92,7 +105,7 @@ Your local `AI_SERVER/.env` file is intentionally excluded from `StudyBuddy.zip`
 
 For Render hosting, read `RenderDeploymentGuide.md`. The project includes a root `render.yaml` for deploying the full StudyBuddy repo and an `AI_SERVER/render.yaml` for deploying a server-only repo.
 
-Version 3.1 build 21 adds Apple App Attest to the AI request flow. The production Render server now uses `APP_ATTEST_MODE=enforce`, so protected AI requests require a valid assertion from the signed app. See `AppAttestDeploymentGuide.md` for validation and rollback steps.
+Version 3.2 build 22 uses Apple App Attest in enforced mode for the iOS AI request flow. Android protected AI requests require a separate Google Play Integrity rollout; the Android app remains usable offline until that security gate is complete. See `AppAttestDeploymentGuide.md` and `AndroidMigrationGuide.md`.
 
 ## Fine-tune exam content
 
@@ -117,7 +130,7 @@ Avoid adding real exam questions or copied paid question-bank content. For App R
 
 ## Practice exam scoring
 
-StudyBuddy uses CompTIA-style scaled-score estimates on a 100-900 range with public-style pass thresholds. CompTIA's exact scoring algorithm and real item weights are proprietary, so the app does not claim to reproduce official scoring exactly.
+PrepNexus uses CompTIA-style scaled-score estimates on a 100-900 range with public-style pass thresholds. CompTIA's exact scoring algorithm and real item weights are proprietary, so the app does not claim to reproduce official scoring exactly.
 
 ## App Store notes
 
@@ -125,6 +138,6 @@ StudyBuddy uses CompTIA-style scaled-score estimates on a 100-900 range with pub
 - Privacy: If you enable the AI tutor server, disclose that exam performance, selected answers, inferred confidence signals, and study activity may be sent to your server for personalization.
 - Privacy: Build 20 also sends an App Attest key identifier, attestation material, signed assertions, and anti-replay counters to protect the AI service. These values are used for app functionality and security, not advertising or tracking.
 - Suggested age rating: 4+ unless you add web access, social features, or user-generated content.
-- Do not imply endorsement by CompTIA. Keep the app name as `StudyBuddy`, not `CompTIA StudyBuddy`.
+- Do not imply endorsement by CompTIA. Keep the app name as `PrepNexus: IT Certs` and retain the independent-study disclaimer.
 - Before release, compare all objectives and weights against the current official CompTIA 220-1201, 220-1202, and Security+ objectives PDFs.
 - App updates, bug fixes, and future iOS compatibility releases should be delivered through TestFlight and the App Store.

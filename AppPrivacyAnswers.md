@@ -1,6 +1,6 @@
-# StudyBuddy App Store Connect Privacy Answers
+# PrepNexus App Store Connect Privacy Answers
 
-These answers describe StudyBuddy 3.0 build 20 with the hosted AI Tutor and App Attest enabled. Recheck them against the deployed server before publishing.
+These answers describe PrepNexus iOS 3.2 build 22 with the hosted AI Tutor and App Attest enforcement enabled. Recheck them against the deployed server before publishing. Android disclosures are documented separately in `GooglePlayDataSafety.md`.
 
 ## Data Collection
 
@@ -14,7 +14,7 @@ Choose `Yes, we collect data from this app`.
 - Purpose: App Functionality and Product Personalization
 - Linked to the user: Yes
 - Used for tracking: No
-- Reason: A random StudyBuddy student profile ID connects adaptive learning history across requests.
+- Reason: A random PrepNexus student profile ID connects adaptive learning history across requests.
 
 ### Identifiers > Device ID
 
@@ -50,7 +50,7 @@ Choose `Yes, we collect data from this app`.
 - Audio Data
 - Browsing History
 - Advertising Data
-- Diagnostics collected by StudyBuddy
+- Diagnostics collected by PrepNexus
 - Data Used to Track You
 
 ## Privacy URLs

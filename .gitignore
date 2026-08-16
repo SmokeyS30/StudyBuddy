@@ -4,6 +4,14 @@ DerivedData/
 build/
 *.xcuserstate
 
+# Android / Gradle
+.gradle/
+Android/.gradle/
+Android/local.properties
+Android/**/build/
+Android/.idea/
+*.iml
+
 AI_SERVER/.env
 AI_SERVER/.env.*
 !AI_SERVER/.env.example
