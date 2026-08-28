@@ -47,6 +47,16 @@ Useful outputs:
 
 The generated release bundle is unsigned until Android Studio's signed-bundle workflow is completed.
 
+## Sign The Release Bundle
+
+PrepNexus includes a local signing helper that keeps passwords out of source files and command arguments:
+
+```bash
+./sign-release.command
+```
+
+The script asks for the keystore password, displays the aliases in the keystore, asks which alias to use, runs tests and lint, creates the signed `.aab`, and verifies its signature. Passwords are held only as temporary environment variables for that run. Keystores and local signing properties are ignored by Git.
+
 ## Foldable Support
 
 The app responds to the available window instead of checking for one device model. Compact windows use bottom navigation and a focused single-pane workflow. Wider windows use a navigation rail and two-pane study, practice, results, and lab layouts. WindowManager posture information supports book and tabletop positions without locking orientation or aspect ratio.

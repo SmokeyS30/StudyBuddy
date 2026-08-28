@@ -1,5 +1,6 @@
 package com.smokeys30.prepnexus.ui
 
+import android.app.Activity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -12,8 +13,10 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -32,22 +35,47 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.core.view.WindowCompat
 import com.smokeys30.prepnexus.data.AiServiceClient
 import com.smokeys30.prepnexus.data.CatalogRepository
 import com.smokeys30.prepnexus.data.FoldPosture
 import com.smokeys30.prepnexus.data.PrepNexusStore
 import kotlinx.coroutines.delay
+
+private object ForegroundSession : DefaultLifecycleObserver {
+    val generation = mutableIntStateOf(0)
+    private var isObserving = false
+
+    fun observe() {
+        if (isObserving) return
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        isObserving = true
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        generation.intValue += 1
+    }
+}
 
 enum class AppDestination(val label: String, val icon: ImageVector) {
     TODAY("Today", Icons.Outlined.Home),
@@ -63,12 +91,18 @@ fun PrepNexusRoot(foldPosture: FoldPosture) {
     val context = LocalContext.current
     val catalog = remember { CatalogRepository(context).load() }
     val store = remember { PrepNexusStore(context, catalog) }
-    var showWelcome by remember { mutableStateOf(true) }
+    SideEffect { ForegroundSession.observe() }
+    val foregroundGeneration = ForegroundSession.generation.intValue
+    var handledGeneration by rememberSaveable { mutableIntStateOf(-1) }
+    var showWelcome by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         AiServiceClient().monitor { store.aiHealth = it }
     }
-    LaunchedEffect(Unit) {
+    LaunchedEffect(foregroundGeneration) {
+        if (handledGeneration == foregroundGeneration) return@LaunchedEffect
+        handledGeneration = foregroundGeneration
+        showWelcome = true
         delay(5_000)
         showWelcome = false
     }
@@ -87,8 +121,21 @@ fun PrepNexusRoot(foldPosture: FoldPosture) {
 
 @Composable
 private fun WelcomeScreen(examCode: String) {
+    val view = LocalView.current
+    DisposableEffect(view) {
+        val window = (view.context as? Activity)?.window
+        val controller = window?.let { WindowCompat.getInsetsController(it, view) }
+        val previousLightStatusBars = controller?.isAppearanceLightStatusBars
+        controller?.isAppearanceLightStatusBars = false
+        onDispose {
+            if (previousLightStatusBars != null) {
+                controller.isAppearanceLightStatusBars = previousLightStatusBars
+            }
+        }
+    }
+
     Box(
-        Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary),
+        Modifier.fillMaxSize().background(Color(0xFF0B3C49)),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -96,18 +143,18 @@ private fun WelcomeScreen(examCode: String) {
                 Icons.AutoMirrored.Outlined.MenuBook,
                 contentDescription = null,
                 modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.onPrimary
+                tint = Color.White
             )
             Spacer(Modifier.height(24.dp))
-            Text("Welcome to", color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.titleMedium)
+            Text("Welcome to", color = Color.White, style = MaterialTheme.typography.titleMedium)
             Text(
                 "PrepNexus: IT Certs",
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = Color.White,
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(Modifier.height(10.dp))
-            Text(examCode, color = MaterialTheme.colorScheme.primaryContainer, style = MaterialTheme.typography.titleSmall)
+            Text(examCode, color = Color(0xFF9FE3D5), style = MaterialTheme.typography.titleSmall)
         }
     }
 }
@@ -142,7 +189,10 @@ private fun AppScaffold(store: PrepNexusStore, foldPosture: FoldPosture) {
             Scaffold(
                 bottomBar = {
                     AnimatedVisibility(visible = !store.practiceInProgress) {
-                        NavigationBar {
+                        NavigationBar(
+                            modifier = Modifier.navigationBarsPadding(),
+                            windowInsets = WindowInsets(0, 0, 0, 0)
+                        ) {
                             AppDestination.entries.forEach { item ->
                                 NavigationBarItem(
                                     selected = destination == item,

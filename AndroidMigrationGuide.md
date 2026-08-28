@@ -28,6 +28,16 @@ The Android interface is adaptive rather than tied to a specific Fold model. It 
 
 Keep this keystore backed up. Losing it can prevent future updates unless Play App Signing recovery is available.
 
+An existing StudyBuddy upload keystore was found during this migration. Reuse that keystore if it is the one previously associated with your Google Play app. Do not create a replacement upload key for an existing Play listing unless Google approves an upload-key reset.
+
+Recommended protected local path:
+
+```text
+~/Documents/PrepNexus Signing/prepnexus-upload-key.jks
+```
+
+To sign from Terminal, open the `Android` folder and run `./sign-release.command`. The script validates the password and alias before building, and it never writes either password into the repository.
+
 1. In Android Studio choose **Build > Generate Signed App Bundle or APK**.
 2. Select **Android App Bundle**, then **Next**.
 3. Beside **Key store path**, choose **Create new**.

@@ -8,9 +8,12 @@ build/
 .gradle/
 Android/.gradle/
 Android/local.properties
+Android/keystore.properties
 Android/**/build/
 Android/.idea/
 *.iml
+*.jks
+*.keystore
 
 AI_SERVER/.env
 AI_SERVER/.env.*
