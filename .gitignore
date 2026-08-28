@@ -11,6 +11,7 @@ Android/local.properties
 Android/keystore.properties
 Android/**/build/
 Android/.idea/
+Android/releases/*.aab
 *.iml
 *.jks
 *.keystore
