@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Official privacy and support information for PrepNexus: IT Certs.">
+  <title>PrepNexus Support</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --background: #f5f7fb;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5d6b82;
+      --accent: #123a6f;
+      --line: #dce3ed;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #11151c;
+        --surface: #171d27;
+        --text: #f3f6fb;
+        --muted: #aeb9ca;
+        --accent: #8dc5ff;
+        --line: #303a49;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--background);
+    }
+    header, main, footer {
+      width: min(760px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 48px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1, h2 { line-height: 1.2; }
+    h1 { margin: 0 0 4px; font-size: 2rem; }
+    h2 { margin: 0 0 8px; font-size: 1.2rem; }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    main { padding: 30px 0; }
+    section {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    a {
+      color: var(--accent);
+      font-weight: 650;
+      text-underline-offset: 3px;
+    }
+    .links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px 28px;
+    }
+    footer {
+      padding: 12px 0 44px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>PrepNexus: IT Certs</h1>
+      <p class="muted">Official support and privacy information</p>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>How can we help?</h2>
+      <p>Find troubleshooting steps, contact support, or review how PrepNexus handles study and app-integrity data.</p>
+    </section>
+    <section class="links" aria-label="PrepNexus resources">
+      <div>
+        <h2>Support</h2>
+        <p>Get help with the app, AI Tutor connection, progress, practice tests, or interactive labs.</p>
+        <a href="Support.html">Open Support</a>
+      </div>
+      <div>
+        <h2>Privacy</h2>
+        <p>Read what PrepNexus stores, sends, protects, and never uses for tracking.</p>
+        <a href="PrivacyPolicy.html">Read Privacy Policy</a>
+      </div>
+    </section>
+    <section>
+      <h2>Contact</h2>
+      <p>Email <a href="mailto:edwardbloomfield@mac.com?subject=PrepNexus%20Support">edwardbloomfield@mac.com</a> for PrepNexus support or privacy questions.</p>
+    </section>
+  </main>
+  <footer>
+    <p>PrepNexus is independent study software and is not affiliated with or endorsed by CompTIA.</p>
+  </footer>
+</body>
+</html>
