@@ -289,7 +289,7 @@ private fun ObjectivesContent(store: PrepNexusStore, twoPane: Boolean) {
         ) {
             items(store.exam.domains, key = { it.id }) { domain ->
                 Card(border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)) {
-                    DomainDetail(domain, Modifier.fillMaxWidth())
+                    DomainDetailCard(domain)
                 }
             }
         }
@@ -313,13 +313,28 @@ private fun DomainSelector(domain: ExamDomain, selected: Boolean, onClick: () ->
 @Composable
 private fun DomainDetail(domain: ExamDomain, modifier: Modifier) {
     Column(modifier.verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        Text(domain.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-        Text(domain.focus, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        domain.objectives.forEachIndexed { index, objective ->
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text("${index + 1}.", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-                Text(objective)
-            }
+        DomainDetailContent(domain)
+    }
+}
+
+@Composable
+private fun DomainDetailCard(domain: ExamDomain) {
+    Column(
+        Modifier.fillMaxWidth().padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
+    ) {
+        DomainDetailContent(domain)
+    }
+}
+
+@Composable
+private fun DomainDetailContent(domain: ExamDomain) {
+    Text(domain.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+    Text(domain.focus, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    domain.objectives.forEachIndexed { index, objective ->
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text("${index + 1}.", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            Text(objective)
         }
     }
 }
