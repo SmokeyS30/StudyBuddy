@@ -4633,10 +4633,1279 @@
         }
       ],
       "summary" : "Study guidance for security concepts, threats, architecture, operations, governance, risk, and compliance. Content is original study material and should be checked against the official objectives before submission."
+    },
+    {
+      "code" : "200-301",
+      "disclaimer" : "PrepNexus is independent study software. It is not affiliated with, endorsed by, or sponsored by Cisco. Cisco and CCNA are trademarks of Cisco Systems, Inc. Practice questions are original study prompts, not real exam questions.",
+      "domains" : [
+        {
+          "focus" : "Addressing, subnetting, interfaces, topologies, virtualization, and wireless principles.",
+          "id" : "200-301-fundamentals",
+          "objectives" : [
+            "Explain the roles of routers, Layer 2 and Layer 3 switches, controllers, endpoints, and servers.",
+            "Compare two-tier, three-tier, spine-leaf, WAN, SOHO, and on-premises versus cloud topologies.",
+            "Perform IPv4 addressing and subnetting, including VLSM, to meet host requirements with least waste.",
+            "Describe IPv6 address types, prefix lengths, and basic IPv6 addressing concepts.",
+            "Compare TCP and UDP, common port numbers, and typical application behavior.",
+            "Explain switching concepts: MAC learning and aging, frame flooding, and the MAC table.",
+            "Describe wireless principles: RF behavior, bands, channels, SSIDs, and basic WLAN concepts.",
+            "Describe virtualization and cloud concepts relevant to network fundamentals."
+          ],
+          "title" : "Network Fundamentals",
+          "weight" : 20
+        },
+        {
+          "focus" : "VLANs, trunks, CDP/LLDP, LACP, Rapid PVST+, and wireless access.",
+          "id" : "200-301-access",
+          "objectives" : [
+            "Configure and verify VLANs, access ports, and trunk ports, including allowed VLANs and native VLAN.",
+            "Explain and verify interswitch connectivity using trunking.",
+            "Configure and verify Layer 2 discovery protocols: Cisco Discovery Protocol and LLDP.",
+            "Configure and verify EtherChannel using LACP.",
+            "Describe Rapid PVST+ operation: root bridge selection, port roles, and port states.",
+            "Describe WLAN deployment concepts: AP modes, WLC roles, and wireless access configuration."
+          ],
+          "title" : "Network Access",
+          "weight" : 20
+        },
+        {
+          "focus" : "Routing-table decisions, IPv4/IPv6 static routes, single-area OSPFv2, and FHRP purpose.",
+          "id" : "200-301-connectivity",
+          "objectives" : [
+            "Interpret routing tables to predict forwarding: longest prefix match, administrative distance, and metric.",
+            "Configure and verify IPv4 and IPv6 static routing, default routes, and floating static routes.",
+            "Configure and verify single-area OSPFv2: neighbor adjacency, router ID, passive interfaces, and cost.",
+            "Describe the purpose of first-hop redundancy protocols and how they provide gateway resiliency.",
+            "Compare routing protocol characteristics at a conceptual level."
+          ],
+          "title" : "IP Connectivity",
+          "weight" : 25
+        },
+        {
+          "focus" : "NAT, NTP, DHCP/DNS, SNMP, syslog, QoS, SSH, and file transfer.",
+          "id" : "200-301-services",
+          "objectives" : [
+            "Configure and verify NAT: inside static, inside dynamic, and PAT overload.",
+            "Explain DHCP client and server operation, and configure a basic DHCP server on a router.",
+            "Describe the roles of DNS, NTP, SNMP, syslog, and QoS in network operations.",
+            "Configure SSH for secure device management and describe TFTP/FTP use for image and config transfer."
+          ],
+          "title" : "IP Services",
+          "weight" : 10
+        },
+        {
+          "focus" : "Access control, Layer 2 protections, VPN concepts, AAA, and WLAN security.",
+          "id" : "200-301-security",
+          "objectives" : [
+            "Configure and verify standard and extended IPv4 access control lists.",
+            "Explain Layer 2 security: port security, DHCP snooping, and dynamic ARP inspection concepts.",
+            "Describe VPN concepts: site-to-site, remote access, and the basic purpose of IPsec.",
+            "Explain AAA concepts: authentication, authorization, accounting, and local versus server-based AAA.",
+            "Describe WLAN security: WPA2, WPA3, and basic wireless threat awareness.",
+            "Apply device hardening basics: strong credentials, banners, and disabling unused services."
+          ],
+          "title" : "Security Fundamentals",
+          "weight" : 15
+        },
+        {
+          "focus" : "Controller-based networking, APIs, JSON, configuration management, and AI/ML concepts.",
+          "id" : "200-301-automation",
+          "objectives" : [
+            "Compare traditional, controller-based, and software-defined networking architectures.",
+            "Explain REST API concepts, HTTP verbs, and data formats including JSON.",
+            "Interpret basic JSON data returned by network APIs.",
+            "Describe configuration management tools and concepts: Ansible, Puppet, and Chef at a conceptual level.",
+            "Describe how AI and ML concepts apply to modern network operations."
+          ],
+          "title" : "Automation and Programmability",
+          "weight" : 10
+        }
+      ],
+      "flashcards" : [
+        {
+          "back" : "62 usable hosts: 2^6 minus network and broadcast, 64 total minus 2.",
+          "domainID" : "200-301-fundamentals",
+          "front" : "How many usable hosts does a /26 provide?",
+          "id" : "200-301-fc-001"
+        },
+        {
+          "back" : "TCP is connection-oriented with sequencing, acknowledgments, and retransmission. UDP is connectionless with minimal overhead and no delivery guarantee.",
+          "domainID" : "200-301-fundamentals",
+          "front" : "What is the difference between TCP and UDP?",
+          "id" : "200-301-fc-002"
+        },
+        {
+          "back" : "It floods the frame out all ports except the receiving port, then learns the source MAC from the reply.",
+          "domainID" : "200-301-fundamentals",
+          "front" : "What does a switch do when it receives a frame for an unknown destination MAC?",
+          "id" : "200-301-fc-003"
+        },
+        {
+          "back" : "It carries untagged traffic across the trunk. Both ends must agree or traffic can leak between VLANs.",
+          "domainID" : "200-301-access",
+          "front" : "What is the purpose of the native VLAN on a trunk?",
+          "id" : "200-301-fc-004"
+        },
+        {
+          "back" : "Lowest bridge ID wins: lowest priority first, then lowest MAC address as the tiebreaker.",
+          "domainID" : "200-301-access",
+          "front" : "How is the STP root bridge elected?",
+          "id" : "200-301-fc-005"
+        },
+        {
+          "back" : "Link Aggregation Control Protocol negotiates bundling multiple physical links into one logical EtherChannel, adding bandwidth and redundancy.",
+          "domainID" : "200-301-access",
+          "front" : "What does LACP do?",
+          "id" : "200-301-fc-006"
+        },
+        {
+          "back" : "When multiple routes match a destination, the router forwards using the route with the longest (most specific) prefix.",
+          "domainID" : "200-301-connectivity",
+          "front" : "What is longest prefix match?",
+          "id" : "200-301-fc-007"
+        },
+        {
+          "back" : "A trustworthiness rating for route sources. Lower wins: connected 0, static 1, OSPF 110. Used to choose between different sources for the same prefix.",
+          "domainID" : "200-301-connectivity",
+          "front" : "What is administrative distance?",
+          "id" : "200-301-fc-008"
+        },
+        {
+          "back" : "Same area, same hello and dead timers, same authentication settings, matching MTU, and unique router IDs, among other parameters.",
+          "domainID" : "200-301-connectivity",
+          "front" : "What must match for two routers to become OSPF neighbors?",
+          "id" : "200-301-fc-009"
+        },
+        {
+          "back" : "Port Address Translation maps many private inside addresses to one public address using unique source ports, the common way a LAN shares one public IP.",
+          "domainID" : "200-301-services",
+          "front" : "What is PAT overload?",
+          "id" : "200-301-fc-010"
+        },
+        {
+          "back" : "IP address, subnet mask, default gateway, and DNS server addresses, plus a lease time.",
+          "domainID" : "200-301-services",
+          "front" : "What four things does a DHCP server typically provide?",
+          "id" : "200-301-fc-011"
+        },
+        {
+          "back" : "SSH encrypts the session including credentials. Telnet sends everything, including passwords, in clear text.",
+          "domainID" : "200-301-services",
+          "front" : "Why use SSH instead of Telnet for device management?",
+          "id" : "200-301-fc-012"
+        },
+        {
+          "back" : "An implicit deny: anything not explicitly permitted is denied. Forgetting this is the classic ACL surprise.",
+          "domainID" : "200-301-security",
+          "front" : "What is the implicit rule at the end of every ACL?",
+          "id" : "200-301-fc-013"
+        },
+        {
+          "back" : "Rogue DHCP servers: it classifies ports as trusted or untrusted and drops DHCP server messages arriving on untrusted ports.",
+          "domainID" : "200-301-security",
+          "front" : "What does DHCP snooping protect against?",
+          "id" : "200-301-fc-014"
+        },
+        {
+          "back" : "Authentication (who are you), authorization (what can you do), accounting (what did you do).",
+          "domainID" : "200-301-security",
+          "front" : "What do the three As in AAA stand for?",
+          "id" : "200-301-fc-015"
+        },
+        {
+          "back" : "Centralized in the controller, which programs forwarding behavior down to the network devices instead of each device deciding alone.",
+          "domainID" : "200-301-automation",
+          "front" : "In controller-based networking, where does the control plane live?",
+          "id" : "200-301-fc-016"
+        },
+        {
+          "back" : "GET retrieves, POST creates, PUT updates or replaces, DELETE removes. These are the basic verbs for REST API interaction.",
+          "domainID" : "200-301-automation",
+          "front" : "What do the HTTP verbs GET, POST, PUT, DELETE do?",
+          "id" : "200-301-fc-017"
+        },
+        {
+          "back" : "JavaScript Object Notation: a lightweight text format of key-value pairs and arrays that REST APIs commonly use to exchange data.",
+          "domainID" : "200-301-automation",
+          "front" : "What is JSON?",
+          "id" : "200-301-fc-018"
+        },
+        {
+          "back" : "/21: 2,046 usable (546 wasted). /22 gives only 1,022, too small. /20 gives 4,094, wasting far more.",
+          "domainID" : "200-301-fundamentals",
+          "front" : "A site needs 1,500 usable hosts on one subnet. Which prefix wastes the least?",
+          "id" : "200-301-hard-fc-001"
+        },
+        {
+          "back" : "Global unicast starts with 2000::/3 (e.g. 2001:db8::). Link-local starts with fe80::/10 and never leaves the local link.",
+          "domainID" : "200-301-fundamentals",
+          "front" : "How do you tell an IPv6 global unicast address from a link-local one?",
+          "id" : "200-301-hard-fc-002"
+        },
+        {
+          "back" : "Untagged traffic from one side lands in the wrong VLAN on the other, causing misdelivery and a potential VLAN-hopping risk.",
+          "domainID" : "200-301-access",
+          "front" : "What breaks when two ends of a trunk disagree on the native VLAN?",
+          "id" : "200-301-hard-fc-003"
+        },
+        {
+          "back" : "Discarding, learning, forwarding. Only forwarding ports pass user traffic. Rapid PVST+ converges faster than legacy 802.1D timers.",
+          "domainID" : "200-301-access",
+          "front" : "In Rapid PVST+, what are the port states and which forward traffic?",
+          "id" : "200-301-hard-fc-004"
+        },
+        {
+          "back" : "A static route with a higher administrative distance than the dynamic protocol, so it stays dormant until the dynamic route disappears, then takes over as backup.",
+          "domainID" : "200-301-connectivity",
+          "front" : "What does a floating static route do?",
+          "id" : "200-301-hard-fc-005"
+        },
+        {
+          "back" : "On multi-access networks the Designated Router and Backup DR reduce adjacency overhead: other routers form adjacencies only with the DR/BDR instead of full mesh.",
+          "domainID" : "200-301-connectivity",
+          "front" : "In OSPF, what are the DR and BDR for?",
+          "id" : "200-301-hard-fc-006"
+        },
+        {
+          "back" : "Inside local is the private address as seen on the inside network. Inside global is the public address representing it on the outside.",
+          "domainID" : "200-301-services",
+          "front" : "In NAT terminology, what is the difference between inside local and inside global?",
+          "id" : "200-301-hard-fc-007"
+        },
+        {
+          "back" : "Stratum is distance from the reference clock: stratum 1 is directly attached, higher numbers are further downstream. Lower stratum means more authoritative time.",
+          "domainID" : "200-301-services",
+          "front" : "What is NTP stratum and why does it matter?",
+          "id" : "200-301-hard-fc-008"
+        },
+        {
+          "back" : "Protect (drop, no alert), restrict (drop plus alert and counter), shutdown (error-disable the port until recovery).",
+          "domainID" : "200-301-security",
+          "front" : "What are the three port-security violation modes?",
+          "id" : "200-301-hard-fc-009"
+        },
+        {
+          "back" : "WPA3-Personal uses SAE instead of the WPA2 4-way handshake, resisting offline dictionary attacks against captured handshakes.",
+          "domainID" : "200-301-security",
+          "front" : "Why is WPA3 stronger than WPA2 for personal networks?",
+          "id" : "200-301-hard-fc-010"
+        },
+        {
+          "back" : "Southbound APIs let the controller program network devices. Northbound APIs expose network services and state up to applications and orchestration.",
+          "domainID" : "200-301-automation",
+          "front" : "What is the difference between northbound and southbound APIs?",
+          "id" : "200-301-hard-fc-011"
+        },
+        {
+          "back" : "It manages devices over SSH or APIs using playbooks, with no agent software installed on the managed nodes.",
+          "domainID" : "200-301-automation",
+          "front" : "Why is Ansible called agentless?",
+          "id" : "200-301-hard-fc-012"
+        }
+      ],
+      "id" : "cisco-ccna-200-301",
+      "name" : "Cisco CCNA",
+      "practiceQuestions" : [
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "/21 (2,046 usable)",
+            "Choose the control that fits timing, risk, and responsibility rather than a generally true statement",
+            "Verify the original user or business workflow after the technical symptom changes",
+            "Preserve data and logs before making irreversible changes"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "/22 and /23 are too small for 1,500 hosts. /21 provides 2,046 usable (546 wasted) versus /20 with 4,094 (2,594 wasted), so /21 is the unique least-waste answer.",
+          "id" : "200-301-hard-001",
+          "prompt" : "A branch office needs 1,500 usable host addresses on a single subnet. Which prefix wastes the fewest addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Authentication settings differ",
+            "Confirm scope and evidence before selecting a disruptive remediation path",
+            "Choose the control that fits timing, risk, and responsibility rather than a generally true statement",
+            "Verify the original user or business workflow after the technical symptom changes"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "OSPF authentication must match for adjacency. Hostnames, descriptions, and cable colors have no effect on neighbor formation.",
+          "id" : "200-301-hard-002",
+          "prompt" : "Two routers in the same OSPF area will not reach FULL adjacency. Timers, MTU, and area all match. Which mismatch is the next most likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The /25 static route",
+            "Preserve data and logs before making irreversible changes",
+            "Confirm scope and evidence before selecting a disruptive remediation path",
+            "Choose the control that fits timing, risk, and responsibility rather than a generally true statement"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Longest prefix match wins first: /25 is the most specific match, so the static route forwards the packet regardless of protocol or administrative distance.",
+          "id" : "200-301-hard-003",
+          "prompt" : "A router has 172.16.0.0/12 via EIGRP, 172.16.32.0/19 via OSPF, and 172.16.32.128/25 via a static route. A packet for 172.16.32.200 arrives. Which route forwards it?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Native VLAN agreement on both ends of the trunk",
+            "Verify the original user or business workflow after the technical symptom changes",
+            "Preserve data and logs before making irreversible changes",
+            "Confirm scope and evidence before selecting a disruptive remediation path"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Cross-VLAN leakage on a trunk points to a native VLAN mismatch: untagged frames from one side enter the wrong VLAN on the other.",
+          "id" : "200-301-hard-004",
+          "prompt" : "Users in VLAN 20 intermittently receive traffic meant for VLAN 30 across a trunk. Both VLANs are allowed on the trunk. What should be checked first?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Inside local and inside global",
+            "Choose the control that fits timing, risk, and responsibility rather than a generally true statement",
+            "Verify the original user or business workflow after the technical symptom changes",
+            "Preserve data and logs before making irreversible changes"
+          ],
+          "domainID" : "200-301-services",
+          "explanation" : "10.1.1.5 is the inside local address as seen internally; 203.0.113.7 is the inside global address representing it externally.",
+          "id" : "200-301-hard-005",
+          "prompt" : "A packet leaves the inside network with source 10.1.1.5 and arrives outside with source 203.0.113.7. In NAT terms, what are these addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The access port was left trusted or snooping is not enforcing on it",
+            "Confirm scope and evidence before selecting a disruptive remediation path",
+            "Choose the control that fits timing, risk, and responsibility rather than a generally true statement",
+            "Verify the original user or business workflow after the technical symptom changes"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "Snooping only drops server messages on untrusted ports. If the rogue port is trusted or the feature is not active on the VLAN, rogue offers still reach clients.",
+          "id" : "200-301-hard-006",
+          "prompt" : "DHCP snooping is enabled but clients still receive addresses from a rogue server on an access port. What was missed?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "up",
+            "Preserve data and logs before making irreversible changes",
+            "Choose the control that fits timing, risk, and responsibility rather than a generally true statement",
+            "Verify the original user or business workflow after the technical symptom changes"
+          ],
+          "domainID" : "200-301-automation",
+          "explanation" : "The interfaces array holds one object; its status key has the value up. Reading key-value pairs inside arrays is the core JSON skill.",
+          "id" : "200-301-hard-007",
+          "prompt" : "A controller returns this JSON: {\\\"interfaces\\\": [{\\\"name\\\": \\\"Gig0/0\\\", \\\"status\\\": \\\"up\\\"}]}. What is the status of Gig0/0?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Brief interruption, then the standby takes over the virtual gateway address",
+            "Verify the original user or business workflow after the technical symptom changes",
+            "Preserve data and logs before making irreversible changes",
+            "Confirm scope and evidence before selecting a disruptive remediation path"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "FHRP provides a virtual gateway shared by the group. When the active fails, the standby assumes the virtual address and hosts keep their configuration.",
+          "id" : "200-301-hard-008",
+          "prompt" : "A LAN uses a first-hop redundancy protocol with one active and one standby gateway. The active router fails. What do the hosts experience?"
+        }
+      ],
+      "quickTips" : [
+        "Cisco does not publish a fixed official passing score for 200-301, and third-party numbers like 825/1000 are practice conventions, not Cisco policy. Train for mastery of the blueprint, not a number.",
+        "CCNA v2.0 arrives February 3, 2027 and restructures the domains. If you test before February 2, 2027, study v1.1; after that date, confirm the current blueprint before scheduling.",
+        "Read the verb before planning the lab. Describe and compare need recognition and explanation; configure and verify needs hands-on practice with real or simulated devices.",
+        "Subnetting speed is a force multiplier: aim for under 60 seconds per calculation. VLSM design questions punish slow arithmetic more than any other topic.",
+        "IP Connectivity is the heaviest domain at 25 percent. Routing-table reading, static routes, and single-area OSPFv2 deserve the most lab time.",
+        "Do not skip Automation and Programmability because it is only 10 percent. Controller concepts, REST verbs, and JSON interpretation are straightforward points if you drill them."
+      ],
+      "studyTasks" : [
+        {
+          "detail" : "Practice 20 subnetting problems: given a host requirement, pick the least-waste prefix, then compute network, broadcast, and usable range. Target under 60 seconds each.",
+          "domainID" : "200-301-fundamentals",
+          "id" : "200-301-fund-1",
+          "minutes" : 45,
+          "title" : "Subnetting speed drill"
+        },
+        {
+          "detail" : "Design a VLSM scheme for a small company with four LANs of different sizes plus WAN links. Allocate from one block, largest requirement first, and document each subnet.",
+          "domainID" : "200-301-fundamentals",
+          "id" : "200-301-fund-2",
+          "minutes" : 45,
+          "title" : "VLSM design lab"
+        },
+        {
+          "detail" : "List common ports 20/21, 22, 23, 25, 53, 67/68, 69, 80, 110, 143, 161, 443, 3389 and write the service plus TCP or UDP behavior for each.",
+          "domainID" : "200-301-fundamentals",
+          "id" : "200-301-fund-3",
+          "minutes" : 35,
+          "title" : "TCP/UDP and ports map"
+        },
+        {
+          "detail" : "Draw two-tier, three-tier, and spine-leaf topologies. Label where routers, Layer 3 switches, and controllers sit, and note the failure domains.",
+          "domainID" : "200-301-fundamentals",
+          "id" : "200-301-fund-4",
+          "minutes" : 30,
+          "title" : "Topology sketch"
+        },
+        {
+          "detail" : "On paper or in Packet Tracer, create three VLANs, assign access ports, build a trunk with a native VLAN, and verify with show commands. Then break the native VLAN and observe the symptom.",
+          "domainID" : "200-301-access",
+          "id" : "200-301-access-1",
+          "minutes" : 45,
+          "title" : "VLAN and trunk lab"
+        },
+        {
+          "detail" : "Given bridge priorities and MAC addresses for three switches, predict the root bridge, root ports, and designated ports. Then change one priority and re-predict.",
+          "domainID" : "200-301-access",
+          "id" : "200-301-access-2",
+          "minutes" : 35,
+          "title" : "STP root election drill"
+        },
+        {
+          "detail" : "Configure an LACP EtherChannel between two switches. Verify with show etherchannel summary, then shut one member link and confirm the bundle stays up.",
+          "domainID" : "200-301-access",
+          "id" : "200-301-access-3",
+          "minutes" : 40,
+          "title" : "EtherChannel build"
+        },
+        {
+          "detail" : "Enable CDP and LLDP in a lab, map neighbors with show cdp neighbors and show lldp neighbors, then disable CDP on an edge port facing users and explain why.",
+          "domainID" : "200-301-access",
+          "id" : "200-301-access-4",
+          "minutes" : 30,
+          "title" : "Discovery protocol sweep"
+        },
+        {
+          "detail" : "Take a sample show ip route output with static, connected, and OSPF routes. For six destination addresses, predict the chosen route and explain longest prefix match and administrative distance.",
+          "domainID" : "200-301-connectivity",
+          "id" : "200-301-conn-1",
+          "minutes" : 40,
+          "title" : "Routing table reading"
+        },
+        {
+          "detail" : "Build a three-router chain. Configure static routes both directions, add a default route, then create a floating static route with a higher administrative distance as backup.",
+          "domainID" : "200-301-connectivity",
+          "id" : "200-301-conn-2",
+          "minutes" : 45,
+          "title" : "Static route lab"
+        },
+        {
+          "detail" : "Configure single-area OSPFv2 on three routers. Verify neighbors, then break adjacency on purpose: mismatched area, mismatched hello timer, and a passive interface. Record the symptom of each.",
+          "domainID" : "200-301-connectivity",
+          "id" : "200-301-conn-3",
+          "minutes" : 45,
+          "title" : "OSPF adjacency lab"
+        },
+        {
+          "detail" : "Explain what happens to hosts when their default gateway router fails, then describe how a first-hop redundancy protocol fixes it. Contrast active/standby with load-sharing behavior.",
+          "domainID" : "200-301-connectivity",
+          "id" : "200-301-conn-4",
+          "minutes" : 30,
+          "title" : "FHRP concept map"
+        },
+        {
+          "detail" : "Configure PAT overload on an edge router so a private LAN reaches the internet. Verify translations, then add one inside static NAT entry for a server and test inbound reachability.",
+          "domainID" : "200-301-services",
+          "id" : "200-301-svc-1",
+          "minutes" : 40,
+          "title" : "NAT overload lab"
+        },
+        {
+          "detail" : "Configure a router as a DHCP server with an excluded range, DNS server, and default router. Release and renew a client, then verify the lease on both sides.",
+          "domainID" : "200-301-services",
+          "id" : "200-301-svc-2",
+          "minutes" : 35,
+          "title" : "DHCP server build"
+        },
+        {
+          "detail" : "Make a card for each: NTP, SNMP, syslog, QoS, SSH, TFTP/FTP. For each, write its purpose, one key port or behavior, and one misconfiguration symptom.",
+          "domainID" : "200-301-services",
+          "id" : "200-301-svc-3",
+          "minutes" : 35,
+          "title" : "Services matrix"
+        },
+        {
+          "detail" : "On a lab device, configure SSH with a domain name and RSA keys, disable Telnet, set an MOTD banner, and verify only SSH is reachable for management.",
+          "domainID" : "200-301-services",
+          "id" : "200-301-svc-4",
+          "minutes" : 30,
+          "title" : "Management hardening pass"
+        },
+        {
+          "detail" : "Write a standard ACL limiting VTY access to one management subnet, and an extended ACL blocking a host from a server while permitting everything else. Apply, test, and then fix the implicit deny surprise.",
+          "domainID" : "200-301-security",
+          "id" : "200-301-sec-1",
+          "minutes" : 45,
+          "title" : "ACL lab"
+        },
+        {
+          "detail" : "Configure port security with sticky MAC learning and a violation shutdown on an access port. Trigger a violation with a second device, then recover the port and document the steps.",
+          "domainID" : "200-301-security",
+          "id" : "200-301-sec-2",
+          "minutes" : 35,
+          "title" : "Port security drill"
+        },
+        {
+          "detail" : "Diagram authentication, authorization, and accounting for an admin logging into a router via TACACS+. Mark what each A proves and where the decision is made.",
+          "domainID" : "200-301-security",
+          "id" : "200-301-sec-3",
+          "minutes" : 30,
+          "title" : "AAA concept map"
+        },
+        {
+          "detail" : "Compare site-to-site and remote-access VPNs: who initiates, what traffic is protected, and where each is used. Add one sentence on what IPsec provides.",
+          "domainID" : "200-301-security",
+          "id" : "200-301-sec-4",
+          "minutes" : 30,
+          "title" : "VPN comparison"
+        },
+        {
+          "detail" : "Draw the control plane in three designs: traditional distributed, controller-based SDN, and Cisco DNA Center style. Mark where forwarding decisions are made in each.",
+          "domainID" : "200-301-automation",
+          "id" : "200-301-auto-1",
+          "minutes" : 35,
+          "title" : "Architecture compare"
+        },
+        {
+          "detail" : "Given a sample JSON response from a network controller, identify objects, arrays, and key-value pairs. Then match GET, POST, PUT, DELETE to retrieve, create, update, and remove.",
+          "domainID" : "200-301-automation",
+          "id" : "200-301-auto-2",
+          "minutes" : 35,
+          "title" : "REST and JSON drill"
+        },
+        {
+          "detail" : "Make cards for Ansible, Puppet, and Chef: agent or agentless, push or pull, and the language used to describe desired state. Note which one the blueprint emphasizes conceptually.",
+          "domainID" : "200-301-automation",
+          "id" : "200-301-auto-3",
+          "minutes" : 30,
+          "title" : "Config management cards"
+        },
+        {
+          "detail" : "Write a half-page brief on where AI/ML shows up in modern network operations: anomaly detection, predictive maintenance, and intent-based networking. Keep it conceptual, not vendor-specific.",
+          "domainID" : "200-301-automation",
+          "id" : "200-301-auto-4",
+          "minutes" : 30,
+          "title" : "AI in NetOps brief"
+        }
+      ],
+      "summary" : "Study guidance for the Cisco CCNA 200-301 (v1.1) exam: network fundamentals, network access, IP connectivity, IP services, security fundamentals, and automation and programmability. Content is original study material and should be checked against the official Cisco exam topics before submission."
     }
   ],
-  "generatedAt" : "2026-08-16T10:55:54Z",
+  "generatedAt" : "2026-09-28T23:21:01Z",
   "questionBanks" : {
+    "cisco-ccna-200-301" : {
+      "beginner" : [
+        {
+          "answerIndex" : 1,
+          "choices" : [
+            "255.255.255.224 (/27)",
+            "255.255.255.192 (/26)",
+            "255.255.255.128 (/25)",
+            "255.255.255.0 (/24)"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "A /26 provides 62 usable hosts, the smallest block that fits 30. A /27 gives only 30 usable exactly, which leaves no room and is risky; /26 is the standard least-waste answer.",
+          "id" : "200-301-pq-001",
+          "prompt" : "A host needs 30 usable addresses. Which subnet mask wastes the fewest addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "2001:db8::1",
+            "169.254.10.5",
+            "224.0.0.5",
+            "fe80::1"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "2001:db8::/32 is the documentation global unicast range. 169.254.x.x is IPv4 link-local, 224.0.0.5 is IPv4 multicast, fe80::/10 is IPv6 link-local.",
+          "id" : "200-301-pq-002",
+          "prompt" : "Which address is a valid IPv6 global unicast address?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Tagged with VLAN 10",
+            "Untagged, because VLAN 10 is the native VLAN",
+            "Tagged with VLAN 99",
+            "Dropped, because only the native VLAN crosses"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Only native VLAN traffic goes untagged. VLAN 10 is not native here, so its frames cross tagged with VLAN 10.",
+          "id" : "200-301-pq-003",
+          "prompt" : "A trunk link carries VLANs 10, 20, and 30 with native VLAN 99. A frame from VLAN 10 crosses the trunk. How is it tagged?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The switch with priority 16384",
+            "The switch with priority 32768",
+            "The switch with the highest MAC address",
+            "Neither; an election tie disables STP"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Lowest bridge ID wins, and priority is compared before MAC address. 16384 beats 32768.",
+          "id" : "200-301-pq-004",
+          "prompt" : "Two switches have bridge priorities 32768 and 16384, all else equal. Which becomes the STP root?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The static 10.1.0.0/16 route",
+            "The OSPF 10.0.0.0/8 route",
+            "Both, with load balancing",
+            "Neither; the packet is dropped"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Longest prefix match decides first: /16 is more specific than /8, so the static route wins regardless of administrative distance.",
+          "id" : "200-301-pq-005",
+          "prompt" : "A router knows 10.0.0.0/8 via OSPF and 10.1.0.0/16 via a static route. A packet arrives for 10.1.5.5. Which route is used?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Different OSPF area numbers",
+            "Different hostnames",
+            "Different interface descriptions",
+            "Different enable secrets"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Area numbers must match for adjacency. Hostnames, descriptions, and enable secrets do not affect OSPF neighbor formation.",
+          "id" : "200-301-pq-006",
+          "prompt" : "Two routers will not form an OSPF adjacency. Which mismatch is a likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "PAT overload on the edge router",
+            "One-to-one static NAT for every host",
+            "No NAT; private addresses route on the internet",
+            "Dynamic NAT with a pool of one address and no overload"
+          ],
+          "domainID" : "200-301-services",
+          "explanation" : "PAT overload maps many private addresses to one public IP using unique source ports. Static NAT per host wastes addresses, and private addresses are not internet-routable.",
+          "id" : "200-301-pq-007",
+          "prompt" : "An office LAN uses 192.168.1.0/24 internally and one public IP. Which NAT design fits?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The implicit deny blocked the remaining traffic",
+            "ACLs only filter outbound by default",
+            "Extended ACLs cannot filter TCP",
+            "The ACL needs a reload to take effect"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "Every ACL ends with an implicit deny. Traffic not explicitly permitted is dropped, which surprises anyone expecting a default permit.",
+          "id" : "200-301-pq-008",
+          "prompt" : "An extended ACL ends with no explicit permit. A permitted service stops working after the ACL is applied. What is the most likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "WPA3",
+            "WPA",
+            "WEP",
+            "Open authentication"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "WPA3 is the current enterprise standard. WPA is deprecated, WEP is broken, and open authentication provides no encryption.",
+          "id" : "200-301-pq-009",
+          "prompt" : "Which wireless security standard should a new enterprise deployment choose?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          "domainID" : "200-301-automation",
+          "explanation" : "GET retrieves data. POST creates, PUT updates, DELETE removes.",
+          "id" : "200-301-pq-010",
+          "prompt" : "A script needs to read the current interface status from a network controller. Which HTTP verb fits?"
+        }
+      ],
+      "certificationReady" : [
+        {
+          "answerIndex" : 1,
+          "choices" : [
+            "255.255.255.224 (/27)",
+            "255.255.255.192 (/26)",
+            "255.255.255.128 (/25)",
+            "255.255.255.0 (/24)"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "A /26 provides 62 usable hosts, the smallest block that fits 30. A /27 gives only 30 usable exactly, which leaves no room and is risky; /26 is the standard least-waste answer.",
+          "id" : "200-301-pq-001",
+          "prompt" : "A host needs 30 usable addresses. Which subnet mask wastes the fewest addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "2001:db8::1",
+            "169.254.10.5",
+            "224.0.0.5",
+            "fe80::1"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "2001:db8::/32 is the documentation global unicast range. 169.254.x.x is IPv4 link-local, 224.0.0.5 is IPv4 multicast, fe80::/10 is IPv6 link-local.",
+          "id" : "200-301-pq-002",
+          "prompt" : "Which address is a valid IPv6 global unicast address?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Tagged with VLAN 10",
+            "Untagged, because VLAN 10 is the native VLAN",
+            "Tagged with VLAN 99",
+            "Dropped, because only the native VLAN crosses"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Only native VLAN traffic goes untagged. VLAN 10 is not native here, so its frames cross tagged with VLAN 10.",
+          "id" : "200-301-pq-003",
+          "prompt" : "A trunk link carries VLANs 10, 20, and 30 with native VLAN 99. A frame from VLAN 10 crosses the trunk. How is it tagged?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The switch with priority 16384",
+            "The switch with priority 32768",
+            "The switch with the highest MAC address",
+            "Neither; an election tie disables STP"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Lowest bridge ID wins, and priority is compared before MAC address. 16384 beats 32768.",
+          "id" : "200-301-pq-004",
+          "prompt" : "Two switches have bridge priorities 32768 and 16384, all else equal. Which becomes the STP root?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The static 10.1.0.0/16 route",
+            "The OSPF 10.0.0.0/8 route",
+            "Both, with load balancing",
+            "Neither; the packet is dropped"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Longest prefix match decides first: /16 is more specific than /8, so the static route wins regardless of administrative distance.",
+          "id" : "200-301-pq-005",
+          "prompt" : "A router knows 10.0.0.0/8 via OSPF and 10.1.0.0/16 via a static route. A packet arrives for 10.1.5.5. Which route is used?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Different OSPF area numbers",
+            "Different hostnames",
+            "Different interface descriptions",
+            "Different enable secrets"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Area numbers must match for adjacency. Hostnames, descriptions, and enable secrets do not affect OSPF neighbor formation.",
+          "id" : "200-301-pq-006",
+          "prompt" : "Two routers will not form an OSPF adjacency. Which mismatch is a likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "PAT overload on the edge router",
+            "One-to-one static NAT for every host",
+            "No NAT; private addresses route on the internet",
+            "Dynamic NAT with a pool of one address and no overload"
+          ],
+          "domainID" : "200-301-services",
+          "explanation" : "PAT overload maps many private addresses to one public IP using unique source ports. Static NAT per host wastes addresses, and private addresses are not internet-routable.",
+          "id" : "200-301-pq-007",
+          "prompt" : "An office LAN uses 192.168.1.0/24 internally and one public IP. Which NAT design fits?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The implicit deny blocked the remaining traffic",
+            "ACLs only filter outbound by default",
+            "Extended ACLs cannot filter TCP",
+            "The ACL needs a reload to take effect"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "Every ACL ends with an implicit deny. Traffic not explicitly permitted is dropped, which surprises anyone expecting a default permit.",
+          "id" : "200-301-pq-008",
+          "prompt" : "An extended ACL ends with no explicit permit. A permitted service stops working after the ACL is applied. What is the most likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "WPA3",
+            "WPA",
+            "WEP",
+            "Open authentication"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "WPA3 is the current enterprise standard. WPA is deprecated, WEP is broken, and open authentication provides no encryption.",
+          "id" : "200-301-pq-009",
+          "prompt" : "Which wireless security standard should a new enterprise deployment choose?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          "domainID" : "200-301-automation",
+          "explanation" : "GET retrieves data. POST creates, PUT updates, DELETE removes.",
+          "id" : "200-301-pq-010",
+          "prompt" : "A script needs to read the current interface status from a network controller. Which HTTP verb fits?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "/21 (2,046 usable)",
+            "/20 (4,094 usable)",
+            "/22 (1,022 usable)",
+            "/23 (510 usable)"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "/22 and /23 are too small for 1,500 hosts. /21 provides 2,046 usable (546 wasted) versus /20 with 4,094 (2,594 wasted), so /21 is the unique least-waste answer.",
+          "id" : "200-301-hard-001",
+          "prompt" : "A branch office needs 1,500 usable host addresses on a single subnet. Which prefix wastes the fewest addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Authentication settings differ",
+            "Hostnames differ",
+            "Interface descriptions differ",
+            "Cable colors differ"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "OSPF authentication must match for adjacency. Hostnames, descriptions, and cable colors have no effect on neighbor formation.",
+          "id" : "200-301-hard-002",
+          "prompt" : "Two routers in the same OSPF area will not reach FULL adjacency. Timers, MTU, and area all match. Which mismatch is the next most likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The /25 static route",
+            "The /19 OSPF route",
+            "The /12 EIGRP route",
+            "All three, load-balanced"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Longest prefix match wins first: /25 is the most specific match, so the static route forwards the packet regardless of protocol or administrative distance.",
+          "id" : "200-301-hard-003",
+          "prompt" : "A router has 172.16.0.0/12 via EIGRP, 172.16.32.0/19 via OSPF, and 172.16.32.128/25 via a static route. A packet for 172.16.32.200 arrives. Which route forwards it?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Native VLAN agreement on both ends of the trunk",
+            "The STP root bridge priority",
+            "The OSPF router ID",
+            "The DHCP lease time"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Cross-VLAN leakage on a trunk points to a native VLAN mismatch: untagged frames from one side enter the wrong VLAN on the other.",
+          "id" : "200-301-hard-004",
+          "prompt" : "Users in VLAN 20 intermittently receive traffic meant for VLAN 30 across a trunk. Both VLANs are allowed on the trunk. What should be checked first?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Inside local and inside global",
+            "Outside local and outside global",
+            "Inside global and inside local",
+            "Both are outside global"
+          ],
+          "domainID" : "200-301-services",
+          "explanation" : "10.1.1.5 is the inside local address as seen internally; 203.0.113.7 is the inside global address representing it externally.",
+          "id" : "200-301-hard-005",
+          "prompt" : "A packet leaves the inside network with source 10.1.1.5 and arrives outside with source 203.0.113.7. In NAT terms, what are these addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The access port was left trusted or snooping is not enforcing on it",
+            "The DHCP pool is too small",
+            "NTP is not synchronized",
+            "The native VLAN is wrong"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "Snooping only drops server messages on untrusted ports. If the rogue port is trusted or the feature is not active on the VLAN, rogue offers still reach clients.",
+          "id" : "200-301-hard-006",
+          "prompt" : "DHCP snooping is enabled but clients still receive addresses from a rogue server on an access port. What was missed?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "up",
+            "down",
+            "unknown",
+            "The JSON is malformed"
+          ],
+          "domainID" : "200-301-automation",
+          "explanation" : "The interfaces array holds one object; its status key has the value up. Reading key-value pairs inside arrays is the core JSON skill.",
+          "id" : "200-301-hard-007",
+          "prompt" : "A controller returns this JSON: {\\\"interfaces\\\": [{\\\"name\\\": \\\"Gig0/0\\\", \\\"status\\\": \\\"up\\\"}]}. What is the status of Gig0/0?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Brief interruption, then the standby takes over the virtual gateway address",
+            "Permanent outage until the router is replaced",
+            "Hosts must be reconfigured with a new gateway",
+            "The standby only works after a manual failover command"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "FHRP provides a virtual gateway shared by the group. When the active fails, the standby assumes the virtual address and hosts keep their configuration.",
+          "id" : "200-301-hard-008",
+          "prompt" : "A LAN uses a first-hop redundancy protocol with one active and one standby gateway. The active router fails. What do the hosts experience?"
+        }
+      ],
+      "nightmareMode" : [
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "/21 (2,046 usable)",
+            "/20 (4,094 usable)",
+            "/22 (1,022 usable)",
+            "/23 (510 usable)"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "/22 and /23 are too small for 1,500 hosts. /21 provides 2,046 usable (546 wasted) versus /20 with 4,094 (2,594 wasted), so /21 is the unique least-waste answer.",
+          "id" : "200-301-hard-001",
+          "prompt" : "A branch office needs 1,500 usable host addresses on a single subnet. Which prefix wastes the fewest addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Authentication settings differ",
+            "Hostnames differ",
+            "Interface descriptions differ",
+            "Cable colors differ"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "OSPF authentication must match for adjacency. Hostnames, descriptions, and cable colors have no effect on neighbor formation.",
+          "id" : "200-301-hard-002",
+          "prompt" : "Two routers in the same OSPF area will not reach FULL adjacency. Timers, MTU, and area all match. Which mismatch is the next most likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The /25 static route",
+            "The /19 OSPF route",
+            "The /12 EIGRP route",
+            "All three, load-balanced"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Longest prefix match wins first: /25 is the most specific match, so the static route forwards the packet regardless of protocol or administrative distance.",
+          "id" : "200-301-hard-003",
+          "prompt" : "A router has 172.16.0.0/12 via EIGRP, 172.16.32.0/19 via OSPF, and 172.16.32.128/25 via a static route. A packet for 172.16.32.200 arrives. Which route forwards it?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Native VLAN agreement on both ends of the trunk",
+            "The STP root bridge priority",
+            "The OSPF router ID",
+            "The DHCP lease time"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Cross-VLAN leakage on a trunk points to a native VLAN mismatch: untagged frames from one side enter the wrong VLAN on the other.",
+          "id" : "200-301-hard-004",
+          "prompt" : "Users in VLAN 20 intermittently receive traffic meant for VLAN 30 across a trunk. Both VLANs are allowed on the trunk. What should be checked first?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Inside local and inside global",
+            "Outside local and outside global",
+            "Inside global and inside local",
+            "Both are outside global"
+          ],
+          "domainID" : "200-301-services",
+          "explanation" : "10.1.1.5 is the inside local address as seen internally; 203.0.113.7 is the inside global address representing it externally.",
+          "id" : "200-301-hard-005",
+          "prompt" : "A packet leaves the inside network with source 10.1.1.5 and arrives outside with source 203.0.113.7. In NAT terms, what are these addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The access port was left trusted or snooping is not enforcing on it",
+            "The DHCP pool is too small",
+            "NTP is not synchronized",
+            "The native VLAN is wrong"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "Snooping only drops server messages on untrusted ports. If the rogue port is trusted or the feature is not active on the VLAN, rogue offers still reach clients.",
+          "id" : "200-301-hard-006",
+          "prompt" : "DHCP snooping is enabled but clients still receive addresses from a rogue server on an access port. What was missed?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "up",
+            "down",
+            "unknown",
+            "The JSON is malformed"
+          ],
+          "domainID" : "200-301-automation",
+          "explanation" : "The interfaces array holds one object; its status key has the value up. Reading key-value pairs inside arrays is the core JSON skill.",
+          "id" : "200-301-hard-007",
+          "prompt" : "A controller returns this JSON: {\\\"interfaces\\\": [{\\\"name\\\": \\\"Gig0/0\\\", \\\"status\\\": \\\"up\\\"}]}. What is the status of Gig0/0?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Brief interruption, then the standby takes over the virtual gateway address",
+            "Permanent outage until the router is replaced",
+            "Hosts must be reconfigured with a new gateway",
+            "The standby only works after a manual failover command"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "FHRP provides a virtual gateway shared by the group. When the active fails, the standby assumes the virtual address and hosts keep their configuration.",
+          "id" : "200-301-hard-008",
+          "prompt" : "A LAN uses a first-hop redundancy protocol with one active and one standby gateway. The active router fails. What do the hosts experience?"
+        }
+      ],
+      "realExam" : [
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "/21 (2,046 usable)",
+            "/20 (4,094 usable)",
+            "/22 (1,022 usable)",
+            "/23 (510 usable)"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "/22 and /23 are too small for 1,500 hosts. /21 provides 2,046 usable (546 wasted) versus /20 with 4,094 (2,594 wasted), so /21 is the unique least-waste answer.",
+          "id" : "200-301-hard-001",
+          "prompt" : "A branch office needs 1,500 usable host addresses on a single subnet. Which prefix wastes the fewest addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Authentication settings differ",
+            "Hostnames differ",
+            "Interface descriptions differ",
+            "Cable colors differ"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "OSPF authentication must match for adjacency. Hostnames, descriptions, and cable colors have no effect on neighbor formation.",
+          "id" : "200-301-hard-002",
+          "prompt" : "Two routers in the same OSPF area will not reach FULL adjacency. Timers, MTU, and area all match. Which mismatch is the next most likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The /25 static route",
+            "The /19 OSPF route",
+            "The /12 EIGRP route",
+            "All three, load-balanced"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Longest prefix match wins first: /25 is the most specific match, so the static route forwards the packet regardless of protocol or administrative distance.",
+          "id" : "200-301-hard-003",
+          "prompt" : "A router has 172.16.0.0/12 via EIGRP, 172.16.32.0/19 via OSPF, and 172.16.32.128/25 via a static route. A packet for 172.16.32.200 arrives. Which route forwards it?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Native VLAN agreement on both ends of the trunk",
+            "The STP root bridge priority",
+            "The OSPF router ID",
+            "The DHCP lease time"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Cross-VLAN leakage on a trunk points to a native VLAN mismatch: untagged frames from one side enter the wrong VLAN on the other.",
+          "id" : "200-301-hard-004",
+          "prompt" : "Users in VLAN 20 intermittently receive traffic meant for VLAN 30 across a trunk. Both VLANs are allowed on the trunk. What should be checked first?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Inside local and inside global",
+            "Outside local and outside global",
+            "Inside global and inside local",
+            "Both are outside global"
+          ],
+          "domainID" : "200-301-services",
+          "explanation" : "10.1.1.5 is the inside local address as seen internally; 203.0.113.7 is the inside global address representing it externally.",
+          "id" : "200-301-hard-005",
+          "prompt" : "A packet leaves the inside network with source 10.1.1.5 and arrives outside with source 203.0.113.7. In NAT terms, what are these addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The access port was left trusted or snooping is not enforcing on it",
+            "The DHCP pool is too small",
+            "NTP is not synchronized",
+            "The native VLAN is wrong"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "Snooping only drops server messages on untrusted ports. If the rogue port is trusted or the feature is not active on the VLAN, rogue offers still reach clients.",
+          "id" : "200-301-hard-006",
+          "prompt" : "DHCP snooping is enabled but clients still receive addresses from a rogue server on an access port. What was missed?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "up",
+            "down",
+            "unknown",
+            "The JSON is malformed"
+          ],
+          "domainID" : "200-301-automation",
+          "explanation" : "The interfaces array holds one object; its status key has the value up. Reading key-value pairs inside arrays is the core JSON skill.",
+          "id" : "200-301-hard-007",
+          "prompt" : "A controller returns this JSON: {\\\"interfaces\\\": [{\\\"name\\\": \\\"Gig0/0\\\", \\\"status\\\": \\\"up\\\"}]}. What is the status of Gig0/0?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Brief interruption, then the standby takes over the virtual gateway address",
+            "Permanent outage until the router is replaced",
+            "Hosts must be reconfigured with a new gateway",
+            "The standby only works after a manual failover command"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "FHRP provides a virtual gateway shared by the group. When the active fails, the standby assumes the virtual address and hosts keep their configuration.",
+          "id" : "200-301-hard-008",
+          "prompt" : "A LAN uses a first-hop redundancy protocol with one active and one standby gateway. The active router fails. What do the hosts experience?"
+        },
+        {
+          "answerIndex" : 1,
+          "choices" : [
+            "255.255.255.224 (/27)",
+            "255.255.255.192 (/26)",
+            "255.255.255.128 (/25)",
+            "255.255.255.0 (/24)"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "A /26 provides 62 usable hosts, the smallest block that fits 30. A /27 gives only 30 usable exactly, which leaves no room and is risky; /26 is the standard least-waste answer.",
+          "id" : "200-301-pq-001",
+          "prompt" : "A host needs 30 usable addresses. Which subnet mask wastes the fewest addresses?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "2001:db8::1",
+            "169.254.10.5",
+            "224.0.0.5",
+            "fe80::1"
+          ],
+          "domainID" : "200-301-fundamentals",
+          "explanation" : "2001:db8::/32 is the documentation global unicast range. 169.254.x.x is IPv4 link-local, 224.0.0.5 is IPv4 multicast, fe80::/10 is IPv6 link-local.",
+          "id" : "200-301-pq-002",
+          "prompt" : "Which address is a valid IPv6 global unicast address?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Tagged with VLAN 10",
+            "Untagged, because VLAN 10 is the native VLAN",
+            "Tagged with VLAN 99",
+            "Dropped, because only the native VLAN crosses"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Only native VLAN traffic goes untagged. VLAN 10 is not native here, so its frames cross tagged with VLAN 10.",
+          "id" : "200-301-pq-003",
+          "prompt" : "A trunk link carries VLANs 10, 20, and 30 with native VLAN 99. A frame from VLAN 10 crosses the trunk. How is it tagged?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The switch with priority 16384",
+            "The switch with priority 32768",
+            "The switch with the highest MAC address",
+            "Neither; an election tie disables STP"
+          ],
+          "domainID" : "200-301-access",
+          "explanation" : "Lowest bridge ID wins, and priority is compared before MAC address. 16384 beats 32768.",
+          "id" : "200-301-pq-004",
+          "prompt" : "Two switches have bridge priorities 32768 and 16384, all else equal. Which becomes the STP root?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The static 10.1.0.0/16 route",
+            "The OSPF 10.0.0.0/8 route",
+            "Both, with load balancing",
+            "Neither; the packet is dropped"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Longest prefix match decides first: /16 is more specific than /8, so the static route wins regardless of administrative distance.",
+          "id" : "200-301-pq-005",
+          "prompt" : "A router knows 10.0.0.0/8 via OSPF and 10.1.0.0/16 via a static route. A packet arrives for 10.1.5.5. Which route is used?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "Different OSPF area numbers",
+            "Different hostnames",
+            "Different interface descriptions",
+            "Different enable secrets"
+          ],
+          "domainID" : "200-301-connectivity",
+          "explanation" : "Area numbers must match for adjacency. Hostnames, descriptions, and enable secrets do not affect OSPF neighbor formation.",
+          "id" : "200-301-pq-006",
+          "prompt" : "Two routers will not form an OSPF adjacency. Which mismatch is a likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "PAT overload on the edge router",
+            "One-to-one static NAT for every host",
+            "No NAT; private addresses route on the internet",
+            "Dynamic NAT with a pool of one address and no overload"
+          ],
+          "domainID" : "200-301-services",
+          "explanation" : "PAT overload maps many private addresses to one public IP using unique source ports. Static NAT per host wastes addresses, and private addresses are not internet-routable.",
+          "id" : "200-301-pq-007",
+          "prompt" : "An office LAN uses 192.168.1.0/24 internally and one public IP. Which NAT design fits?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "The implicit deny blocked the remaining traffic",
+            "ACLs only filter outbound by default",
+            "Extended ACLs cannot filter TCP",
+            "The ACL needs a reload to take effect"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "Every ACL ends with an implicit deny. Traffic not explicitly permitted is dropped, which surprises anyone expecting a default permit.",
+          "id" : "200-301-pq-008",
+          "prompt" : "An extended ACL ends with no explicit permit. A permitted service stops working after the ACL is applied. What is the most likely cause?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "WPA3",
+            "WPA",
+            "WEP",
+            "Open authentication"
+          ],
+          "domainID" : "200-301-security",
+          "explanation" : "WPA3 is the current enterprise standard. WPA is deprecated, WEP is broken, and open authentication provides no encryption.",
+          "id" : "200-301-pq-009",
+          "prompt" : "Which wireless security standard should a new enterprise deployment choose?"
+        },
+        {
+          "answerIndex" : 0,
+          "choices" : [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          "domainID" : "200-301-automation",
+          "explanation" : "GET retrieves data. POST creates, PUT updates, DELETE removes.",
+          "id" : "200-301-pq-010",
+          "prompt" : "A script needs to read the current interface status from a network controller. Which HTTP verb fits?"
+        }
+      ]
+    },
     "comptia-a-plus-core-1-220-1201" : {
       "beginner" : [
         {
@@ -27810,6 +29079,454 @@
   },
   "schemaVersion" : 1,
   "simulations" : {
+    "cisco-ccna-200-301" : [
+      {
+        "description" : "A 10-question hard-mode practice test with original scenario questions, tough distractors, and PBQ-style items.",
+        "id" : "200-301-short-10",
+        "maximumScaledScore" : 1000,
+        "minimumScaledScore" : 300,
+        "passingScaledScore" : 825,
+        "performanceItems" : [
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-fundamentals",
+            "explanation" : "Pick the smallest block that fits: /21 holds 2,046; /23 holds 510; /26 holds 62; /28 holds 14; /30 holds 2 for point-to-point links.",
+            "id" : "200-301-hard-pbq-subnet",
+            "isPerformanceBased" : true,
+            "kind" : "matching",
+            "matchingAnswers" : [
+              "/21",
+              "/23",
+              "/26",
+              "/28",
+              "/30"
+            ],
+            "matchingPrompts" : [
+              "1,500 hosts",
+              "500 hosts",
+              "60 hosts",
+              "12 hosts",
+              "2 point-to-point hosts"
+            ],
+            "points" : 5,
+            "prompt" : "PBQ: Match each host requirement to the least-waste prefix."
+          },
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+              "Create the VLANs that the trunk must carry",
+              "Set the port to trunk mode",
+              "Set the native VLAN to the agreed value",
+              "Prune the allowed VLAN list to what is needed",
+              "Verify with show interfaces trunk"
+            ],
+            "domainID" : "200-301-access",
+            "explanation" : "VLANs must exist before they can cross a trunk; mode, native VLAN, and allowed list follow; verification closes the loop.",
+            "id" : "200-301-hard-pbq-trunk",
+            "isPerformanceBased" : true,
+            "kind" : "ordering",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 5,
+            "prompt" : "PBQ: Put the trunk configuration steps in order on a switch."
+          },
+          {
+            "choices" : [
+              "Area number matches",
+              "Hello and dead timers match",
+              "Authentication settings match",
+              "MTU matches",
+              "Hostnames match",
+              "Interface descriptions match"
+            ],
+            "correctChoiceIndexes" : [
+              0,
+              1,
+              2,
+              3
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-connectivity",
+            "explanation" : "Area, timers, authentication, and MTU must agree for adjacency. Hostnames and descriptions are cosmetic.",
+            "id" : "200-301-hard-pbq-ospf",
+            "isPerformanceBased" : true,
+            "kind" : "multipleSelect",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 4,
+            "prompt" : "PBQ: Two routers will not form an OSPF adjacency. Select the settings that must be verified."
+          },
+          {
+            "choices" : [
+              "Place extended ACLs close to the traffic source",
+              "Remember the implicit deny at the end",
+              "Order rules from most specific to most general",
+              "Use the established keyword for return traffic where appropriate",
+              "Assume an implicit permit at the end",
+              "Apply the same ACL inbound and outbound without checking direction"
+            ],
+            "correctChoiceIndexes" : [
+              0,
+              1,
+              2,
+              3
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-security",
+            "explanation" : "Extended ACLs belong near the source, rules are top-down so specificity order matters, and the implicit deny must be accounted for. There is no implicit permit.",
+            "id" : "200-301-hard-pbq-acl",
+            "isPerformanceBased" : true,
+            "kind" : "multipleSelect",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 4,
+            "prompt" : "PBQ: An extended ACL will filter traffic to a server farm. Select the correct design practices."
+          },
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-services",
+            "explanation" : "NAT vocabulary separates the address as seen inside from the address as seen outside, and the mapping style used between them.",
+            "id" : "200-301-hard-pbq-nat",
+            "isPerformanceBased" : true,
+            "kind" : "matching",
+            "matchingAnswers" : [
+              "Private address as seen on the inside",
+              "Public address representing an inside host outside",
+              "Address of an outside host as seen on the inside",
+              "One-to-one permanent address mapping",
+              "Many private addresses sharing one public IP via ports"
+            ],
+            "matchingPrompts" : [
+              "Inside local",
+              "Inside global",
+              "Outside local",
+              "Static NAT",
+              "PAT overload"
+            ],
+            "points" : 5,
+            "prompt" : "PBQ: Match each NAT term to its meaning."
+          },
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+              "Confirm the local IP, mask, gateway, and DNS on the host",
+              "Ping the default gateway, then a remote address by IP",
+              "Check the routing table for a matching route",
+              "Verify the return path and any ACLs in the way",
+              "Test name resolution if IPs work but names fail",
+              "Document the fix and verify full functionality"
+            ],
+            "domainID" : "200-301-connectivity",
+            "explanation" : "Work from the host outward: local config, gateway, routing, return path and filters, then DNS. Document at the end.",
+            "id" : "200-301-hard-pbq-troubleshoot",
+            "isPerformanceBased" : true,
+            "kind" : "ordering",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 6,
+            "prompt" : "PBQ: A user cannot reach a remote subnet. Put the diagnostic steps in order."
+          }
+        ],
+        "targetQuestionCount" : 10,
+        "timeLimitMinutes" : 15,
+        "title" : "CCNA Hard Short Practice Test"
+      },
+      {
+        "description" : "A hard-mode randomized simulation with original scenario questions, tougher distractors, and more demanding PBQ-style workflows.",
+        "id" : "200-301-exam-day",
+        "maximumScaledScore" : 1000,
+        "minimumScaledScore" : 300,
+        "passingScaledScore" : 825,
+        "performanceItems" : [
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-fundamentals",
+            "explanation" : "Pick the smallest block that fits: /21 holds 2,046; /23 holds 510; /26 holds 62; /28 holds 14; /30 holds 2 for point-to-point links.",
+            "id" : "200-301-hard-pbq-subnet",
+            "isPerformanceBased" : true,
+            "kind" : "matching",
+            "matchingAnswers" : [
+              "/21",
+              "/23",
+              "/26",
+              "/28",
+              "/30"
+            ],
+            "matchingPrompts" : [
+              "1,500 hosts",
+              "500 hosts",
+              "60 hosts",
+              "12 hosts",
+              "2 point-to-point hosts"
+            ],
+            "points" : 5,
+            "prompt" : "PBQ: Match each host requirement to the least-waste prefix."
+          },
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+              "Create the VLANs that the trunk must carry",
+              "Set the port to trunk mode",
+              "Set the native VLAN to the agreed value",
+              "Prune the allowed VLAN list to what is needed",
+              "Verify with show interfaces trunk"
+            ],
+            "domainID" : "200-301-access",
+            "explanation" : "VLANs must exist before they can cross a trunk; mode, native VLAN, and allowed list follow; verification closes the loop.",
+            "id" : "200-301-hard-pbq-trunk",
+            "isPerformanceBased" : true,
+            "kind" : "ordering",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 5,
+            "prompt" : "PBQ: Put the trunk configuration steps in order on a switch."
+          },
+          {
+            "choices" : [
+              "Area number matches",
+              "Hello and dead timers match",
+              "Authentication settings match",
+              "MTU matches",
+              "Hostnames match",
+              "Interface descriptions match"
+            ],
+            "correctChoiceIndexes" : [
+              0,
+              1,
+              2,
+              3
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-connectivity",
+            "explanation" : "Area, timers, authentication, and MTU must agree for adjacency. Hostnames and descriptions are cosmetic.",
+            "id" : "200-301-hard-pbq-ospf",
+            "isPerformanceBased" : true,
+            "kind" : "multipleSelect",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 4,
+            "prompt" : "PBQ: Two routers will not form an OSPF adjacency. Select the settings that must be verified."
+          },
+          {
+            "choices" : [
+              "Place extended ACLs close to the traffic source",
+              "Remember the implicit deny at the end",
+              "Order rules from most specific to most general",
+              "Use the established keyword for return traffic where appropriate",
+              "Assume an implicit permit at the end",
+              "Apply the same ACL inbound and outbound without checking direction"
+            ],
+            "correctChoiceIndexes" : [
+              0,
+              1,
+              2,
+              3
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-security",
+            "explanation" : "Extended ACLs belong near the source, rules are top-down so specificity order matters, and the implicit deny must be accounted for. There is no implicit permit.",
+            "id" : "200-301-hard-pbq-acl",
+            "isPerformanceBased" : true,
+            "kind" : "multipleSelect",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 4,
+            "prompt" : "PBQ: An extended ACL will filter traffic to a server farm. Select the correct design practices."
+          },
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "correctOrder" : [
+
+            ],
+            "domainID" : "200-301-services",
+            "explanation" : "NAT vocabulary separates the address as seen inside from the address as seen outside, and the mapping style used between them.",
+            "id" : "200-301-hard-pbq-nat",
+            "isPerformanceBased" : true,
+            "kind" : "matching",
+            "matchingAnswers" : [
+              "Private address as seen on the inside",
+              "Public address representing an inside host outside",
+              "Address of an outside host as seen on the inside",
+              "One-to-one permanent address mapping",
+              "Many private addresses sharing one public IP via ports"
+            ],
+            "matchingPrompts" : [
+              "Inside local",
+              "Inside global",
+              "Outside local",
+              "Static NAT",
+              "PAT overload"
+            ],
+            "points" : 5,
+            "prompt" : "PBQ: Match each NAT term to its meaning."
+          },
+          {
+            "choices" : [
+
+            ],
+            "correctChoiceIndexes" : [
+
+            ],
+            "correctMatches" : [
+
+            ],
+            "correctOrder" : [
+              "Confirm the local IP, mask, gateway, and DNS on the host",
+              "Ping the default gateway, then a remote address by IP",
+              "Check the routing table for a matching route",
+              "Verify the return path and any ACLs in the way",
+              "Test name resolution if IPs work but names fail",
+              "Document the fix and verify full functionality"
+            ],
+            "domainID" : "200-301-connectivity",
+            "explanation" : "Work from the host outward: local config, gateway, routing, return path and filters, then DNS. Document at the end.",
+            "id" : "200-301-hard-pbq-troubleshoot",
+            "isPerformanceBased" : true,
+            "kind" : "ordering",
+            "matchingAnswers" : [
+
+            ],
+            "matchingPrompts" : [
+
+            ],
+            "points" : 6,
+            "prompt" : "PBQ: A user cannot reach a remote subnet. Put the diagnostic steps in order."
+          }
+        ],
+        "targetQuestionCount" : 100,
+        "timeLimitMinutes" : 120,
+        "title" : "CCNA Hard Exam-Day Simulation"
+      }
+    ],
     "comptia-a-plus-core-1-220-1201" : [
       {
         "description" : "A 10-question hard-mode practice test with original scenario questions, tough distractors, and PBQ-style items.",
