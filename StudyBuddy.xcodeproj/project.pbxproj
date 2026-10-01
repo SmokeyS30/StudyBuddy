@@ -16,6 +16,7 @@
 		A1000000000000000000001D /* InteractiveLabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001C /* InteractiveLabs.swift */; };
 		A1000000000000000000001F /* LabSimulationEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001E /* LabSimulationEnvironments.swift */; };
 		A10000000000000000000021 /* AppAttestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* AppAttestManager.swift */; };
+		A10000000000000000000025 /* ExamCatalogCCNA.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000024 /* ExamCatalogCCNA.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		A1000000000000000000001C /* InteractiveLabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveLabs.swift; sourceTree = "<group>"; };
 		A1000000000000000000001E /* LabSimulationEnvironments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabSimulationEnvironments.swift; sourceTree = "<group>"; };
 		A10000000000000000000020 /* AppAttestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAttestManager.swift; sourceTree = "<group>"; };
+		A10000000000000000000024 /* ExamCatalogCCNA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCatalogCCNA.swift; sourceTree = "<group>"; };
 		A10000000000000000000022 /* StudyBuddyDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StudyBuddyDebug.entitlements; sourceTree = "<group>"; };
 		A10000000000000000000023 /* StudyBuddyRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StudyBuddyRelease.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,6 +61,7 @@
 				A10000000000000000000012 /* Models.swift */,
 				A10000000000000000000014 /* StudyBuddyStore.swift */,
 				A10000000000000000000016 /* ExamCatalog.swift */,
+				A10000000000000000000024 /* ExamCatalogCCNA.swift */,
 				A10000000000000000000018 /* Views.swift */,
 				A1000000000000000000001C /* InteractiveLabs.swift */,
 				A1000000000000000000001E /* LabSimulationEnvironments.swift */,
@@ -151,6 +154,7 @@
 				A10000000000000000000013 /* Models.swift in Sources */,
 				A10000000000000000000015 /* StudyBuddyStore.swift in Sources */,
 				A10000000000000000000017 /* ExamCatalog.swift in Sources */,
+				A10000000000000000000025 /* ExamCatalogCCNA.swift in Sources */,
 				A10000000000000000000019 /* Views.swift in Sources */,
 				A1000000000000000000001D /* InteractiveLabs.swift in Sources */,
 				A1000000000000000000001F /* LabSimulationEnvironments.swift in Sources */,

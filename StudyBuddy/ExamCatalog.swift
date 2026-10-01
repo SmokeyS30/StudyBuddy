@@ -394,6 +394,8 @@ enum ExamCatalog {
             return aPlusCore1ReadinessTips
         case securityPlus.id:
             return securityPlusReadinessTips
+        case ExamCatalogCCNA.ccna.id:
+            return []
         default:
             return aPlusCore2ReadinessTips
         }
@@ -414,6 +416,11 @@ enum ExamCatalog {
             securityPlus,
             extraFlashcards: securityPlusChallengeFlashcards,
             extraQuestions: securityPlusChallengeQuestions
+        ),
+        challengeRefresh(
+            ExamCatalogCCNA.ccna,
+            extraFlashcards: ExamCatalogCCNA.ccnaChallengeFlashcards,
+            extraQuestions: ExamCatalogCCNA.ccnaChallengeQuestions
         )
     ]
 
@@ -425,6 +432,9 @@ enum ExamCatalog {
         case securityPlus.id:
             let simulation = challengeSimulation(securityPlusSimulation, performanceItems: securityPlusHardPerformanceItems)
             return [shortSimulation(from: simulation, id: "701-short-10", title: "Security+ Hard Short Practice Test"), simulation]
+        case ExamCatalogCCNA.ccna.id:
+            let simulation = challengeSimulation(ExamCatalogCCNA.ccnaSimulation, performanceItems: ExamCatalogCCNA.ccnaHardPerformanceItems)
+            return [shortSimulation(from: simulation, id: "200-301-short-10", title: "CCNA Hard Short Practice Test"), simulation]
         default:
             let simulation = challengeSimulation(aPlusCore2Simulation, performanceItems: aPlusCore2HardPerformanceItems)
             return [shortSimulation(from: simulation, id: "1202-short-10", title: "Core 2 Hard Short Practice Test"), simulation]
@@ -686,6 +696,8 @@ private extension ExamCatalog {
             return aPlusCore1
         case securityPlus.id:
             return securityPlus
+        case ExamCatalogCCNA.ccna.id:
+            return ExamCatalogCCNA.ccna
         default:
             return aPlusCore2
         }
@@ -697,6 +709,8 @@ private extension ExamCatalog {
             return aPlusCore1ChallengeQuestions
         case securityPlus.id:
             return securityPlusChallengeQuestions
+        case ExamCatalogCCNA.ccna.id:
+            return ExamCatalogCCNA.ccnaChallengeQuestions
         default:
             return aPlusCore2ChallengeQuestions
         }
@@ -1175,6 +1189,8 @@ private extension ExamCatalog {
                 q("701-ultra-009", "701-program", "A vendor contract lacks breach notification timelines. Which risk area is most directly affected?", "Third-party incident response and legal/compliance obligations", [], "Contracts should define notification, responsibilities, evidence, data handling, and audit rights."),
                 q("701-ultra-010", "701-concepts", "A user is authorized for an app but attempts to read records outside their department. Which control failed if the request succeeds?", "Authorization or object-level access control", [], "Authentication proves identity; authorization controls what records the identity can access.")
             ]
+        case ExamCatalogCCNA.ccna.id:
+            return []
         default:
             return [
                 q("1202-ultra-001", "1202-os", "A domain user can sign in with cached credentials but cannot access new file shares after a VPN client update. What should be checked first?", "VPN routing, DNS to domain resources, and domain controller reachability", [], "Cached sign-in can succeed while live domain resources fail because the device cannot reach internal services."),
