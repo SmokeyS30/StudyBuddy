@@ -5197,7 +5197,7 @@
     "cisco-ccna-200-301" : {
       "beginner" : [
         {
-          "answerIndex" : 1,
+          "answerIndex" : 0,
           "choices" : [
             "255.255.255.224 (/27)",
             "255.255.255.192 (/26)",
@@ -5205,7 +5205,7 @@
             "255.255.255.0 (/24)"
           ],
           "domainID" : "200-301-fundamentals",
-          "explanation" : "A /26 provides 62 usable hosts, the smallest block that fits 30. A /27 gives only 30 usable exactly, which leaves no room and is risky; /26 is the standard least-waste answer.",
+          "explanation" : "A /27 provides 32 addresses total \u2014 30 usable \u2014 which fits the requirement with zero waste. A /26 provides 62 usable (32 wasted); larger masks waste even more.",
           "id" : "200-301-pq-001",
           "prompt" : "A host needs 30 usable addresses. Which subnet mask wastes the fewest addresses?"
         },
@@ -5329,7 +5329,7 @@
       ],
       "certificationReady" : [
         {
-          "answerIndex" : 1,
+          "answerIndex" : 0,
           "choices" : [
             "255.255.255.224 (/27)",
             "255.255.255.192 (/26)",
@@ -5337,7 +5337,7 @@
             "255.255.255.0 (/24)"
           ],
           "domainID" : "200-301-fundamentals",
-          "explanation" : "A /26 provides 62 usable hosts, the smallest block that fits 30. A /27 gives only 30 usable exactly, which leaves no room and is risky; /26 is the standard least-waste answer.",
+          "explanation" : "A /27 provides 32 addresses total \u2014 30 usable \u2014 which fits the requirement with zero waste. A /26 provides 62 usable (32 wasted); larger masks waste even more.",
           "id" : "200-301-pq-001",
           "prompt" : "A host needs 30 usable addresses. Which subnet mask wastes the fewest addresses?"
         },
@@ -5775,7 +5775,7 @@
           "prompt" : "A LAN uses a first-hop redundancy protocol with one active and one standby gateway. The active router fails. What do the hosts experience?"
         },
         {
-          "answerIndex" : 1,
+          "answerIndex" : 0,
           "choices" : [
             "255.255.255.224 (/27)",
             "255.255.255.192 (/26)",
@@ -5783,7 +5783,7 @@
             "255.255.255.0 (/24)"
           ],
           "domainID" : "200-301-fundamentals",
-          "explanation" : "A /26 provides 62 usable hosts, the smallest block that fits 30. A /27 gives only 30 usable exactly, which leaves no room and is risky; /26 is the standard least-waste answer.",
+          "explanation" : "A /27 provides 32 addresses total \u2014 30 usable \u2014 which fits the requirement with zero waste. A /26 provides 62 usable (32 wasted); larger masks waste even more.",
           "id" : "200-301-pq-001",
           "prompt" : "A host needs 30 usable addresses. Which subnet mask wastes the fewest addresses?"
         },
