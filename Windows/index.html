@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PrepNexus for Windows</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body>
+  <header>
+    <div><p class="eyebrow">PrepNexus · Windows</p><h1>Study desk</h1></div>
+    <span id="connection-status" role="status">Not connected</span>
+  </header>
+  <main>
+    <section aria-labelledby="connection-title">
+      <h2 id="connection-title">Connect to your study server</h2>
+      <form id="connect-form">
+        <label>Local study server URL <input id="server-url" type="url" required placeholder="http://127.0.0.1:8787" autocomplete="url"></label>
+        <label>Bearer token (optional; held in this tab) <input id="gateway-token" type="password" autocomplete="off" placeholder="Kept only while this page is open"></label>
+        <button type="submit">Connect</button>
+      </form>
+      <p class="hint">Use the current public server only on this same computer at <code>http://127.0.0.1:8787</code>. It does not provide authenticated sessions for remote browser clients; do not expose its API directly.</p>
+      <p id="connection-detail" role="status"></p>
+    </section>
+    <section aria-labelledby="track-title">
+      <h2 id="track-title">Choose a track</h2>
+      <div class="row"><label>Certification <select id="exam-select"></select></label><label>Focus domain <select id="domain-select"></select></label></div>
+      <p id="exam-summary"></p><p id="exam-source" class="hint"></p>
+    </section>
+    <section aria-labelledby="learn-title">
+      <h2 id="learn-title">Learn and practice</h2>
+      <nav class="row" aria-label="Study actions"><button id="new-quiz" type="button">Start practice quiz</button><button id="show-cards" type="button">Flashcards</button><button id="show-tasks" type="button">Study tasks</button><button id="get-plan" type="button">Get server study plan</button></nav>
+      <div id="work-area" aria-live="polite"></div>
+    </section>
+    <section aria-labelledby="progress-title">
+      <h2 id="progress-title">Recent work</h2><ul id="history"></ul>
+    </section>
+  </main>
+  <footer>Original practice material for study. Confirm current objectives with the issuing organization. Local browser progress belongs to this Windows user profile.</footer>
+</body>
+</html>
